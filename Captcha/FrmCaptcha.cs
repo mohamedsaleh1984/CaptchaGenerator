@@ -17,9 +17,11 @@ namespace Captcha
         public FrmCaptcha()
         {
             InitializeComponent();
-            cls = new CaptchaLibraryClass(ImageWidth:300,ImageHeight:200);
-            cls.BackgroundColor = new SolidBrush(Color.AliceBlue);
-            cls.NumOfLines = 5;
+            cls = new CaptchaLibraryClass(ImageWidth:200,ImageHeight:50);
+            cls.BackgroundColor = new SolidBrush(Color.Blue);
+            cls.LinesColor = new SolidBrush(Color.Black);
+            cls.NumOfLines = 10;
+            cls.CodeLength = 10;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -53,6 +55,8 @@ namespace Captcha
             Image bitmap = cls.CreateImageBitmap();
              code = cls.GeneratedCode;
             pictureBox1.Image = bitmap;
+            cls.SaveBitmapToFile();
+            MessageBox.Show(cls.ImageFilePath);
         }
     }
 

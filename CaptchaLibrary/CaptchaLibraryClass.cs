@@ -13,13 +13,16 @@ namespace CaptchaLibrary
         private Bitmap _bitmap;
         private int _imageWidth;
         private int _imageHeight;
-        private SolidBrush _linesColor;
 
+        public SolidBrush LinesColor
+        { get; set; }
         public String ImageFilePath { get; private set; }
 
         public SolidBrush BackgroundColor { get; set; }
         public SolidBrush FontColor { get; set; }
-        public String _DirectoryPath { get; set; }
+        public String DirectoryPath { get; set; }
+
+        public int CodeLength { get; set; }
 
 
         /// <summary>
@@ -33,17 +36,17 @@ namespace CaptchaLibrary
                                 int ImageHeight = 50)
         {
             _Rand = new Random();
-            _iCodeLength = CodeLength;
+            this.CodeLength = CodeLength;
             _bitmap = null;
-            _DirectoryPath = DirectoryPath;
+            this.DirectoryPath = DirectoryPath;
             ImageFilePath = "";
             GeneratedCode = "";
             _imageWidth = ImageWidth;
             _imageHeight = ImageHeight;
             ImageFont = new Font("Tahoma", 10 + _Rand.Next(14, 18));
-           BackgroundColor = new SolidBrush(Color.Black);
-           FontColor= new SolidBrush(Color.White);
-            _linesColor = new SolidBrush(Color.Gray);
+            BackgroundColor = new SolidBrush(Color.Black);
+            FontColor = new SolidBrush(Color.White);
+            LinesColor = new SolidBrush(Color.Gray);
             NumOfLines = 10;
         }
 
@@ -68,7 +71,7 @@ namespace CaptchaLibrary
         {
             _Rand = new Random();
             _iCodeLength = 5;
-            _DirectoryPath = "";
+            DirectoryPath = "";
         }
 
         /// <summary>
@@ -92,7 +95,7 @@ namespace CaptchaLibrary
             string alphabets = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             Random r = new Random();
 
-            for (int j = 0; j <= _iCodeLength; j++)
+            for (int j = 0; j <= CodeLength; j++)
                 randomText = randomText + alphabets[r.Next(alphabets.Length)];
 
             GeneratedCode = randomText.ToString();
@@ -175,9 +178,9 @@ namespace CaptchaLibrary
                 g.DrawString(code[i].ToString(),
                            ImageFont,
                             FontColor,
-                            new PointF(10 + ipxlOffset, 10));
+                            new PointF(_imageWidth / 20 + ipxlOffset, _imageWidth / 20));
 
-                ipxlOffset += 20;
+                ipxlOffset += _imageWidth / 10;
             }
 
             DrawRandomLines(g);
@@ -193,7 +196,7 @@ namespace CaptchaLibrary
         {
             for (int i = 0; i < NumOfLines; i++)
             {
-                g.DrawLines(new Pen(_linesColor, 2), GetRandomPoints());
+                g.DrawLines(new Pen(LinesColor, 2), GetRandomPoints());
             }
         }
 
@@ -214,13 +217,13 @@ namespace CaptchaLibrary
         {
             ImageFilePath = GenerateFileName();
 
-            if (!Directory.Exists(_DirectoryPath))
+            if (!Directory.Exists(DirectoryPath))
             {
-                Directory.CreateDirectory(_DirectoryPath);
+                Directory.CreateDirectory(DirectoryPath);
             }
 
 
-            String strFullFilePath = _DirectoryPath + "\\" + ImageFilePath;
+            String strFullFilePath = DirectoryPath + "\\" + ImageFilePath;
 
             if (File.Exists(strFullFilePath))
             {
@@ -249,6 +252,6 @@ namespace CaptchaLibrary
 
             return bSuccessful;
         }
-       
+
     }
 }
