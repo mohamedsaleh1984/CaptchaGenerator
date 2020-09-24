@@ -6,23 +6,21 @@ using System.IO;
 namespace CaptchaLibrary
 {
 
-    public  class CaptchaLibraryClass
+    public class CaptchaLibraryClass
     {
-        private  Random _Rand;
-        private  string _strCode;
-        private  int _iCodeLength;
-        private  Image _BitMapImage;
+        private Random _Rand;
+        private int _iCodeLength;
+        private Bitmap _bitmap;
         private int _imageWidth;
         private int _imageHeight;
-        private Font _imageFont;
-        
+        private SolidBrush _linesColor;
 
-        public  String _DirectoryPath { get; set; }
-        private  string _GeneratedFileName { get; set; }
-        public  string GetGeneratedFilePath()
-        {
-            return _DirectoryPath + "\\" + _GeneratedFileName;
-        }
+        public String ImageFilePath { get; private set; }
+
+        public SolidBrush BackgroundColor { get; set; }
+        public SolidBrush FontColor { get; set; }
+        public String _DirectoryPath { get; set; }
+
 
         /// <summary>
         /// Constructor
@@ -36,26 +34,37 @@ namespace CaptchaLibrary
         {
             _Rand = new Random();
             _iCodeLength = CodeLength;
-            _BitMapImage = null;
+            _bitmap = null;
             _DirectoryPath = DirectoryPath;
-            _GeneratedFileName = "";
-            _strCode = "";
+            ImageFilePath = "";
+            GeneratedCode = "";
             _imageWidth = ImageWidth;
             _imageHeight = ImageHeight;
-            _imageFont = new Font("Tahoma", 10 + _Rand.Next(14, 18));
+            ImageFont = new Font("Tahoma", 10 + _Rand.Next(14, 18));
+           BackgroundColor = new SolidBrush(Color.Black);
+           FontColor= new SolidBrush(Color.White);
+            _linesColor = new SolidBrush(Color.Gray);
+            NumOfLines = 10;
+        }
 
-        }
-        public Font ImageFont
-        {
-            get { return _imageFont; }
-            set { _imageFont = value; }
-        }
+        public int NumOfLines { get; set; }
+
+
+        /// <summary>
+        /// Get/Set Image Font
+        /// </summary>
+        public Font ImageFont { get; set; }
+
+        /// <summary>
+        /// Get Generate Text
+        /// </summary>
+        public String GeneratedCode { get; private set; }
 
 
         /// <summary>
         /// Reset all values for the class.
         /// </summary>
-        public  void Reset()
+        public void Reset()
         {
             _Rand = new Random();
             _iCodeLength = 5;
@@ -80,21 +89,14 @@ namespace CaptchaLibrary
         public string GenerateRandomText()
         {
             string randomText = "";
+            string alphabets = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            Random r = new Random();
 
-            if (String.IsNullOrEmpty(_strCode))
-            {
-                string alphabets = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (int j = 0; j <= _iCodeLength; j++)
+                randomText = randomText + alphabets[r.Next(alphabets.Length)];
 
-                Random r = new Random();
-
-                for (int j = 0; j <= _iCodeLength; j++)
-                {
-                    randomText = randomText + alphabets[r.Next(alphabets.Length)];
-
-                }
-                _strCode = randomText.ToString();
-            }
-            return _strCode;
+            GeneratedCode = randomText.ToString();
+            return GeneratedCode;
         }
 
         /// <summary>
@@ -104,19 +106,19 @@ namespace CaptchaLibrary
         /// <returns></returns>
         public bool IsValidCode(object strInputFromUser)
         {
-            if (String.IsNullOrEmpty(_strCode))
+            if (String.IsNullOrEmpty(GeneratedCode))
             {
                 throw new Exception("");
             }
 
-            return _strCode.Equals(Convert.ToString(strInputFromUser)) ? true : false;
+            return GeneratedCode.Equals(Convert.ToString(strInputFromUser)) ? true : false;
         }
 
         /// <summary>
         /// Generate an Image.
         /// </summary>
         /// <param name="strPath"></param>
-        public void CreateImage()
+        private void CreateImage()
         {
             string code = GenerateRandomText();
 
@@ -137,52 +139,50 @@ namespace CaptchaLibrary
             for (int i = 0; i < code.Length; i++)
             {
                 g.DrawString(code[i].ToString(),
-                           _imageFont,
+                           ImageFont,
                             whtBrush, new PointF(10 + ipxlOffset, 10));
 
                 ipxlOffset += 20;
             }
 
             DrawRandomLines(g);
+        }
 
-            string strFileName = DateTime.Now.Year.ToString() +
-                                DateTime.Now.Month.ToString() +
-                                DateTime.Now.Day.ToString() +
-                                DateTime.Now.Hour.ToString() +
-                                DateTime.Now.Minute.ToString() +
-                                DateTime.Now.Second.ToString();
+        /// <summary>
+        /// Generate an Image and return Bitmap
+        /// </summary>
+        /// <returns></returns>
+        public Bitmap CreateImageBitmap()
+        {
+            string code = GenerateRandomText();
+            if (_bitmap != null)
+                _bitmap.Dispose();
 
-            strFileName += ".bmp";
-            _GeneratedFileName = strFileName;
+            _bitmap = new Bitmap(_imageWidth, _imageHeight, PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(_bitmap);
 
-            if (!Directory.Exists(_DirectoryPath))
+            Rectangle rect = new Rectangle(0, 0, _imageWidth, _imageHeight);
+
+
+            int ipxlOffset = 0;
+
+            g.DrawRectangle(new Pen(Color.Yellow), rect);
+
+            g.FillRectangle(BackgroundColor, rect);
+
+            for (int i = 0; i < code.Length; i++)
             {
-                Directory.CreateDirectory(_DirectoryPath);
+                g.DrawString(code[i].ToString(),
+                           ImageFont,
+                            FontColor,
+                            new PointF(10 + ipxlOffset, 10));
+
+                ipxlOffset += 20;
             }
 
+            DrawRandomLines(g);
 
-            if (File.Exists(_DirectoryPath + "\\" + _GeneratedFileName))
-            {
-                try
-                {
-                    File.Delete(_DirectoryPath + "\\" + _GeneratedFileName);
-                    bitmap.Save(_DirectoryPath + "\\" + _GeneratedFileName);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Error creating file." + "\n" + ex.Message);
-                }
-            }
-            else
-            {
-                bitmap.Save(_DirectoryPath + "\\" + _GeneratedFileName);
-            }
-
-            g.Dispose();
-
-            bitmap.Dispose();
-
-            _BitMapImage = Image.FromFile(_DirectoryPath + "\\" + _GeneratedFileName);
+            return _bitmap;
         }
 
         /// <summary>
@@ -191,34 +191,64 @@ namespace CaptchaLibrary
         /// <param name="g"></param>
         private void DrawRandomLines(Graphics g)
         {
-            SolidBrush gray = new SolidBrush(Color.Gray);
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < NumOfLines; i++)
             {
-                g.DrawLines(new Pen(gray, 2), GetRandomPoints());
+                g.DrawLines(new Pen(_linesColor, 2), GetRandomPoints());
             }
         }
 
-        private void Check()
+        private String GenerateFileName()
         {
-            if (String.IsNullOrEmpty(this._DirectoryPath))
-            {
-                throw new Exception("You should set Directory first.");
-            }
-            if (String.IsNullOrEmpty(this._GeneratedFileName))
-            {
-                throw new Exception("No generated file");
-            }
+            string strFileName = DateTime.Now.Year.ToString() +
+                                DateTime.Now.Month.ToString() +
+                                DateTime.Now.Day.ToString() +
+                                DateTime.Now.Hour.ToString() +
+                                DateTime.Now.Minute.ToString() +
+                                DateTime.Now.Second.ToString();
 
-            if (String.IsNullOrEmpty(this._strCode))
-            {
-                throw new Exception("No generated code");
-            }
-
-            if (_BitMapImage == null)
-            {
-                throw new Exception("No Image generated.");
-            }
+            strFileName += ".bmp";
+            return strFileName;
 
         }
+        public Boolean SaveBitmapToFile()
+        {
+            ImageFilePath = GenerateFileName();
+
+            if (!Directory.Exists(_DirectoryPath))
+            {
+                Directory.CreateDirectory(_DirectoryPath);
+            }
+
+
+            String strFullFilePath = _DirectoryPath + "\\" + ImageFilePath;
+
+            if (File.Exists(strFullFilePath))
+            {
+                try
+                {
+                    File.Delete(strFullFilePath);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error creating file." + "\n" + ex.Message);
+                }
+            }
+
+            bool bSuccessful = false;
+            try
+            {
+                _bitmap.Save(strFullFilePath);
+                bSuccessful = true;
+                ImageFilePath = strFullFilePath;
+            }
+            catch (Exception)
+            {
+                //log error message.
+            }
+
+
+            return bSuccessful;
+        }
+       
     }
 }
