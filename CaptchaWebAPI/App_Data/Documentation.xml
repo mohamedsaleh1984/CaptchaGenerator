@@ -496,9 +496,9 @@
             <summary>
             Get People First Names based on UserId and Age
             </summary>
-            <param name="userId"></param>
-            <param name="age"></param>
-            <returns></returns>
+            <param name="userId">The unique identifier for the user</param>
+            <param name="age">User's age</param>
+            <returns>List of first names...duh</returns>
         </member>
         <member name="M:CaptchaWebAPI.Controllers.CaptchaController.Get(System.Int32)">
             <summary>
@@ -525,6 +525,26 @@
             Delete User base on the Id
             </summary>
             <param name="id"></param>
+        </member>
+        <member name="T:CaptchaWebAPI.Models.Person">
+            <summary>
+            Represents one specific user.
+            </summary>
+        </member>
+        <member name="P:CaptchaWebAPI.Models.Person.Id">
+            <summary>
+            User unique id
+            </summary>
+        </member>
+        <member name="P:CaptchaWebAPI.Models.Person.FirstName">
+            <summary>
+            User First Name
+            </summary>
+        </member>
+        <member name="P:CaptchaWebAPI.Models.Person.LastName">
+            <summary>
+            User Last Name
+            </summary>
         </member>
     </members>
 </doc>
