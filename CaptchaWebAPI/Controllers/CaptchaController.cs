@@ -32,14 +32,21 @@ namespace CaptchaWebAPI.Controllers
         public List<string> GetFirstNames()
         {
             List<string> fnames = new List<string>();
-
             foreach (var person in people)
-            {
                 fnames.Add(person.FirstName);
-            }
-
-
+            
             return fnames;  
+        }
+
+        [Route("api/People/GetFirstNames/{userId:int}/{age:int}")]
+        [HttpGet]
+        public List<string> GetFirstNamesParams(int userId,int age)
+        {
+            List<string> fnames = new List<string>();
+            foreach (var person in people)
+                fnames.Add(person.FirstName);
+
+            return fnames;
         }
 
         // GET: api/Captcha/5
