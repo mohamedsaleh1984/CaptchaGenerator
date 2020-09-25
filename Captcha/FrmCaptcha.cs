@@ -55,8 +55,8 @@ namespace Captcha
             Image bitmap = cls.CreateImageBitmap();
              code = cls.GeneratedCode;
             pictureBox1.Image = bitmap;
-            cls.SaveBitmapToFile();
-            MessageBox.Show(cls.ImageFilePath);
+            //cls.SaveBitmapToFile();
+            //MessageBox.Show(cls.ImageFilePath);
         }
     }
 

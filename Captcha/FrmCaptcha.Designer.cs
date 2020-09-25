@@ -40,20 +40,20 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(445, 196);
+            this.pictureBox1.Size = new System.Drawing.Size(275, 89);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // txtInput
             // 
-            this.txtInput.Location = new System.Drawing.Point(118, 240);
+            this.txtInput.Location = new System.Drawing.Point(85, 107);
             this.txtInput.Name = "txtInput";
             this.txtInput.Size = new System.Drawing.Size(100, 20);
             this.txtInput.TabIndex = 0;
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(212, 266);
+            this.btnClose.Location = new System.Drawing.Point(179, 133);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 3;
@@ -63,7 +63,7 @@
             // 
             // btnVerify
             // 
-            this.btnVerify.Location = new System.Drawing.Point(131, 266);
+            this.btnVerify.Location = new System.Drawing.Point(98, 133);
             this.btnVerify.Name = "btnVerify";
             this.btnVerify.Size = new System.Drawing.Size(75, 23);
             this.btnVerify.TabIndex = 2;
@@ -73,7 +73,7 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(50, 266);
+            this.btnRefresh.Location = new System.Drawing.Point(17, 133);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 23);
             this.btnRefresh.TabIndex = 1;
@@ -85,7 +85,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(592, 345);
+            this.ClientSize = new System.Drawing.Size(300, 168);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnVerify);
