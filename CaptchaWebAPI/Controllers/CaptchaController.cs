@@ -10,6 +10,9 @@ using System.Web.Http;
 
 namespace CaptchaWebAPI.Controllers
 {
+    /// <summary>
+    /// Captcha WebAPI Controller
+    /// </summary>
     public class CaptchaController : ApiController
     {
         List<Person> people = new List<Person>();
@@ -27,6 +30,10 @@ namespace CaptchaWebAPI.Controllers
             return people;
         }
 
+        /// <summary>
+        /// Get People First Names
+        /// </summary>
+        /// <returns></returns>
         [Route("api/People/GetFirstNames")]
         [HttpGet]
         public List<string> GetFirstNames()
@@ -38,6 +45,12 @@ namespace CaptchaWebAPI.Controllers
             return fnames;  
         }
 
+        /// <summary>
+        /// Get People First Names based on UserId and Age
+        /// </summary>
+        /// <param name="userId">The unique identifier for the user</param>
+        /// <param name="age">User's age</param>
+        /// <returns>List of first names...duh</returns>
         [Route("api/People/GetFirstNames/{userId:int}/{age:int}")]
         [HttpGet]
         public List<string> GetFirstNamesParams(int userId,int age)
@@ -49,18 +62,32 @@ namespace CaptchaWebAPI.Controllers
             return fnames;
         }
 
-        // GET: api/Captcha/5
+        /// <summary>
+        /// Get person based on the person's Id.
+        /// GET: api/Captcha/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Person Get(int id)
         {
             return people.Where(x => x.Id == id).FirstOrDefault();
         }
 
+
+        /// <summary>
+        /// Post user info
+        /// </summary>
+        /// <param name="value"></param>
         // POST: api/Captcha
         public void Post(Person value)
         {
             people.Add(value);
         }
 
+        /// <summary>
+        /// Replace User's data.
+        /// </summary>
+        /// <param name="val"></param>
         // PUT: api/Captcha/5
         public void Put(Person val)
         {
@@ -69,9 +96,15 @@ namespace CaptchaWebAPI.Controllers
             people.Add(val);
         }
 
-        //// DELETE: api/Captcha/5
-        //public void Delete(int id)
-        //{
-        //}
+        /// <summary>
+        /// Delete User base on the Id
+        /// </summary>
+        /// <param name="id"></param>
+        // DELETE: api/Captcha/5
+        public void Delete(int id)
+        {
+            Person prev = people.Where(x => x.Id == id).FirstOrDefault();
+            people.Remove(prev);
+        }
     }
 }
