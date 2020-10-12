@@ -7,7 +7,6 @@ using System.Windows.Forms;
 
 namespace CaptchaLibrary
 {
-
     public class CaptchaLibraryClass
     {
         private Random _Rand;
@@ -202,6 +201,10 @@ namespace CaptchaLibrary
             }
         }
 
+        /// <summary>
+        /// Generate Image File Name with Extension.
+        /// </summary>
+        /// <returns></returns>
         private String GenerateFileName()
         {
             string strFileName = DateTime.Now.Year.ToString() +
@@ -215,6 +218,12 @@ namespace CaptchaLibrary
             return strFileName;
 
         }
+
+        /// <summary>
+        /// Save Bitmap to File
+        /// </summary>
+        /// <param name="strFileName"></param>
+        /// <returns></returns>
         public Boolean SaveBitmapToFile(String strFileName)
         {
             
@@ -245,7 +254,8 @@ namespace CaptchaLibrary
             bool bSuccessful = false;
             try
             {
-                _bitmap.Save(strFullFilePath);
+        
+                _bitmap.Save(strFullFilePath,ImageFormat.Bmp);
                 bSuccessful = true;
                 ImageFilePath = strFullFilePath;
                 _bitmap.Dispose();
@@ -259,6 +269,10 @@ namespace CaptchaLibrary
             return bSuccessful;
         }
 
+        /// <summary>
+        /// Generate Captcha
+        /// </summary>
+        /// <returns></returns>
         public bool GenerateCaptcha()
         {
             Bitmap bitmap = CreateImageBitmap();
