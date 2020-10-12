@@ -95,7 +95,7 @@ namespace CaptchaLibrary
             string alphabets = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             Random r = new Random();
 
-            for (int j = 0; j <= CodeLength; j++)
+            for (int j = 0; j < CodeLength; j++)
                 randomText = randomText + alphabets[r.Next(alphabets.Length)];
 
             GeneratedCode = randomText.ToString();
