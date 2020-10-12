@@ -1,6 +1,7 @@
 ﻿using CaptchaWebAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -44,8 +45,25 @@ namespace CaptchaWebAPI.Controllers
 
                 return captcha;
             }
-            return null;
-            
+            return null;  
+        }
+
+
+        /// <summary>
+        /// Generate Captcha code with Specific background color and length
+        /// </summary>
+        /// <param name="codeLength">Length of the Code</param>
+        /// <param name="backgroundColor">Background Color i.e Black,Red..etc</param>
+        /// <returns></returns>
+        [Route("api/Captcha/Generate/{codeLength:int}/{backgroundColor:string}")]
+        [HttpGet]
+        public Captcha Generate(int codeLength=5, string backgroundColor="Black")
+        {
+            cls = new CaptchaLibrary.CaptchaLibraryClass(codeLength, "", 200, 50);
+            Color selectedColor = Color.FromName(backgroundColor);
+            cls.BackgroundColor = new System.Drawing.SolidBrush(selectedColor);
+
+            return Get();
         }
     }
 }

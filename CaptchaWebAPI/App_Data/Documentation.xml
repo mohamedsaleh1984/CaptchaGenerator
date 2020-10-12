@@ -498,6 +498,14 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CaptchaWebAPI.Controllers.CaptchaController.Generate(System.Int32,System.String)">
+            <summary>
+            Generate Captcha code with Specific background color and length
+            </summary>
+            <param name="codeLength">Length of the Code</param>
+            <param name="backgroundColor">Background Color i.e Black,Red..etc</param>
+            <returns></returns>
+        </member>
         <member name="T:CaptchaWebAPI.Models.Captcha">
             <summary>
             Captcha Domain Class
