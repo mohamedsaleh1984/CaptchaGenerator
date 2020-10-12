@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Security.Principal;
+using System.Windows.Forms;
 
 namespace CaptchaLibrary
 {
@@ -9,7 +11,6 @@ namespace CaptchaLibrary
     public class CaptchaLibraryClass
     {
         private Random _Rand;
-        private int _iCodeLength;
         private Bitmap _bitmap;
         private int _imageWidth;
         private int _imageHeight;
@@ -30,13 +31,13 @@ namespace CaptchaLibrary
         /// </summary>
         /// <param name="CodeLength">Length of Generated Code</param>
         /// <param name="DirectoryPath">Location where BMP files Get generated.</param>
-        public CaptchaLibraryClass(int CodeLength = 5,
+        public CaptchaLibraryClass(int _CodeLength = 5,
                                 string DirectoryPath = "C:\\Images",
                                 int ImageWidth = 200,
                                 int ImageHeight = 50)
         {
             _Rand = new Random();
-            this.CodeLength = CodeLength;
+            CodeLength = _CodeLength;
             _bitmap = null;
             this.DirectoryPath = DirectoryPath;
             ImageFilePath = "";
@@ -70,7 +71,7 @@ namespace CaptchaLibrary
         public void Reset()
         {
             _Rand = new Random();
-            _iCodeLength = 5;
+            CodeLength = 5;
             DirectoryPath = "";
         }
 
@@ -89,7 +90,7 @@ namespace CaptchaLibrary
         /// Generate random text.
         /// </summary>
         /// <returns></returns>
-        public string GenerateRandomText()
+        private string GenerateRandomText()
         {
             string randomText = "";
             string alphabets = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -155,9 +156,10 @@ namespace CaptchaLibrary
         /// Generate an Image and return Bitmap
         /// </summary>
         /// <returns></returns>
-        public Bitmap CreateImageBitmap()
+        private Bitmap CreateImageBitmap()
         {
             string code = GenerateRandomText();
+            this.GeneratedCode = code;
             if (_bitmap != null)
                 _bitmap.Dispose();
 
@@ -213,17 +215,20 @@ namespace CaptchaLibrary
             return strFileName;
 
         }
-        public Boolean SaveBitmapToFile()
+        public Boolean SaveBitmapToFile(String strFileName)
         {
-            ImageFilePath = GenerateFileName();
-
-            if (!Directory.Exists(DirectoryPath))
+            
+            if(String.IsNullOrEmpty(DirectoryPath))
+            {
+                DirectoryPath = System.IO.Directory.GetCurrentDirectory();
+            }
+            else if (!Directory.Exists(DirectoryPath))
             {
                 Directory.CreateDirectory(DirectoryPath);
             }
 
 
-            String strFullFilePath = DirectoryPath + "\\" + ImageFilePath;
+            String strFullFilePath = DirectoryPath + "\\" + strFileName;
 
             if (File.Exists(strFullFilePath))
             {
@@ -243,14 +248,22 @@ namespace CaptchaLibrary
                 _bitmap.Save(strFullFilePath);
                 bSuccessful = true;
                 ImageFilePath = strFullFilePath;
+                _bitmap.Dispose();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //log error message.
+                MessageBox.Show(ex.ToString());
             }
 
 
             return bSuccessful;
+        }
+
+        public bool GenerateCaptcha()
+        {
+            Bitmap bitmap = CreateImageBitmap();
+            String strFileName = GenerateFileName();
+            return SaveBitmapToFile(strFileName);
         }
 
     }

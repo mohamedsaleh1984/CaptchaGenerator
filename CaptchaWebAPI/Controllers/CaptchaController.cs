@@ -15,96 +15,37 @@ namespace CaptchaWebAPI.Controllers
     /// </summary>
     public class CaptchaController : ApiController
     {
-        List<Person> people = new List<Person>();
+        private CaptchaLibrary.CaptchaLibraryClass cls = null;
+
+        /// <summary>
+        /// Controller Constructor
+        /// </summary>
         public CaptchaController()
         {
-            people.Add(new Person { FirstName = "Mohamed", LastName = "Saleh",Id=1 });
-            people.Add(new Person { FirstName = "Tolulope", LastName = "Adyemouia", Id = 2 }) ;
-            people.Add(new Person { FirstName = "Mostafa", LastName = "Abdelzahir",Id =3 });
-
+            cls = new CaptchaLibrary.CaptchaLibraryClass(5, "",200,50);
+            cls.NumOfLines = 5;
+            cls.BackgroundColor = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
         }
 
-        // GET: api/Captcha
-        public List<Person> Get()
-        { 
-            return people;
-        }
-
+ 
         /// <summary>
-        /// Get People First Names
+        /// Get request to generate new Captcha Image, return Image Path and Code
+        /// GET: api/Captcha
         /// </summary>
         /// <returns></returns>
-        [Route("api/People/GetFirstNames")]
-        [HttpGet]
-        public List<string> GetFirstNames()
+        public Captcha Get()
         {
-            List<string> fnames = new List<string>();
-            foreach (var person in people)
-                fnames.Add(person.FirstName);
+           
+            Captcha captcha = new Captcha();
+            if (cls.GenerateCaptcha())
+            {  
+                captcha.CaptchaImagePath = cls.ImageFilePath;
+                captcha.CaptchaCode = cls.GeneratedCode;
+
+                return captcha;
+            }
+            return null;
             
-            return fnames;  
-        }
-
-        /// <summary>
-        /// Get People First Names based on UserId and Age
-        /// </summary>
-        /// <param name="userId">The unique identifier for the user</param>
-        /// <param name="age">User's age</param>
-        /// <returns>List of first names...duh</returns>
-        [Route("api/People/GetFirstNames/{userId:int}/{age:int}")]
-        [HttpGet]
-        public List<string> GetFirstNamesParams(int userId,int age)
-        {
-            List<string> fnames = new List<string>();
-            foreach (var person in people)
-                fnames.Add(person.FirstName);
-
-            return fnames;
-        }
-
-        /// <summary>
-        /// Get person based on the person's Id.
-        /// GET: api/Captcha/5
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Person Get(int id)
-        {
-            return people.Where(x => x.Id == id).FirstOrDefault();
-        }
-
-
-        /// <summary>
-        /// Post user info
-        /// </summary>
-        /// <param name="value"></param>
-        // POST: api/Captcha
-        public void Post(Person value)
-        {
-            people.Add(value);
-        }
-
-        /// <summary>
-        /// Replace User's data.
-        /// </summary>
-        /// <param name="val"></param>
-        // PUT: api/Captcha/5
-        public void Put(Person val)
-        {
-            Person prev = people.Where(x => x.Id == val.Id).FirstOrDefault();
-            people.Remove(prev);
-            people.Add(val);
-        }
-
-        /// <summary>
-        /// Delete User base on the Id
-        /// </summary>
-        /// <param name="id"></param>
-        // DELETE: api/Captcha/5
-        public void Delete(int id)
-        {
-            Person prev = people.Where(x => x.Id == id).FirstOrDefault();
-            people.Remove(prev);
         }
     }
 }

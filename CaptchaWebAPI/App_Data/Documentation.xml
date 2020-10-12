@@ -486,64 +486,31 @@
             Captcha WebAPI Controller
             </summary>
         </member>
-        <member name="M:CaptchaWebAPI.Controllers.CaptchaController.GetFirstNames">
+        <member name="M:CaptchaWebAPI.Controllers.CaptchaController.#ctor">
             <summary>
-            Get People First Names
+            Controller Constructor
+            </summary>
+        </member>
+        <member name="M:CaptchaWebAPI.Controllers.CaptchaController.Get">
+            <summary>
+            Get request to generate new Captcha Image, return Image Path and Code
+            GET: api/Captcha
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CaptchaWebAPI.Controllers.CaptchaController.GetFirstNamesParams(System.Int32,System.Int32)">
+        <member name="T:CaptchaWebAPI.Models.Captcha">
             <summary>
-            Get People First Names based on UserId and Age
-            </summary>
-            <param name="userId">The unique identifier for the user</param>
-            <param name="age">User's age</param>
-            <returns>List of first names...duh</returns>
-        </member>
-        <member name="M:CaptchaWebAPI.Controllers.CaptchaController.Get(System.Int32)">
-            <summary>
-            Get person based on the person's Id.
-            GET: api/Captcha/5
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CaptchaWebAPI.Controllers.CaptchaController.Post(CaptchaWebAPI.Models.Person)">
-            <summary>
-            Post user info
-            </summary>
-            <param name="value"></param>
-        </member>
-        <member name="M:CaptchaWebAPI.Controllers.CaptchaController.Put(CaptchaWebAPI.Models.Person)">
-            <summary>
-            Replace User's data.
-            </summary>
-            <param name="val"></param>
-        </member>
-        <member name="M:CaptchaWebAPI.Controllers.CaptchaController.Delete(System.Int32)">
-            <summary>
-            Delete User base on the Id
-            </summary>
-            <param name="id"></param>
-        </member>
-        <member name="T:CaptchaWebAPI.Models.Person">
-            <summary>
-            Represents one specific user.
+            Captcha Domain Class
             </summary>
         </member>
-        <member name="P:CaptchaWebAPI.Models.Person.Id">
+        <member name="P:CaptchaWebAPI.Models.Captcha.CaptchaImagePath">
             <summary>
-            User unique id
+            Captcha File Path
             </summary>
         </member>
-        <member name="P:CaptchaWebAPI.Models.Person.FirstName">
+        <member name="P:CaptchaWebAPI.Models.Captcha.CaptchaCode">
             <summary>
-            User First Name
-            </summary>
-        </member>
-        <member name="P:CaptchaWebAPI.Models.Person.LastName">
-            <summary>
-            User Last Name
+            Captcha Code
             </summary>
         </member>
     </members>
