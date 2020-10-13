@@ -6,6 +6,7 @@ using System.IO;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using CaptchaLibrary;
+using System.Drawing.Text;
 
 namespace Captcha
 {

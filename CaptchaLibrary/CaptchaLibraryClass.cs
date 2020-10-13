@@ -162,6 +162,7 @@ namespace CaptchaLibrary
             if (_bitmap != null)
                 _bitmap.Dispose();
 
+
             _bitmap = new Bitmap(_imageWidth, _imageHeight, PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(_bitmap);
 
@@ -189,6 +190,41 @@ namespace CaptchaLibrary
             return _bitmap;
         }
 
+
+        private Bitmap CreateImageBitmap_v2()
+        {
+            string code = GenerateRandomText();
+            this.GeneratedCode = code;
+            if (_bitmap != null)
+                _bitmap.Dispose();
+
+
+            _bitmap = new Bitmap(_imageWidth, _imageHeight, PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(_bitmap);
+
+            Rectangle rect = new Rectangle(0, 0, _imageWidth, _imageHeight);
+
+
+            int ipxlOffset = 0;
+
+            g.DrawRectangle(new Pen(Color.Yellow), rect);
+
+            g.FillRectangle(BackgroundColor, rect);
+
+            for (int i = 0; i < code.Length; i++)
+            {
+                g.DrawString(code[i].ToString(),
+                           ImageFont,
+                            FontColor,
+                            new PointF(_imageWidth / 20 + ipxlOffset, _imageWidth / 20));
+
+                ipxlOffset += _imageWidth / 10;
+            }
+
+            DrawRandomLines(g);
+
+            return _bitmap;
+        }
         /// <summary>
         /// Draw lines.
         /// </summary>
@@ -278,6 +314,28 @@ namespace CaptchaLibrary
             Bitmap bitmap = CreateImageBitmap();
             String strFileName = GenerateFileName();
             return SaveBitmapToFile(strFileName);
+        }
+
+        /// <summary>
+        /// calculate the proper width and height of a text
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="fontFamily"></param>
+        /// <param name="fontSize"></param>
+        /// <param name="style"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public Rectangle CalcTextRectangle(string text, string fontFamily, float fontSize, FontStyle style, Brush color)
+        {
+            Font font = new Font(fontFamily, fontSize, style);
+            Bitmap bitmap = new Bitmap(1024, 1024, PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(bitmap);
+            SizeF textSizeF = g.MeasureString(text, font);
+            double width = Math.Ceiling(textSizeF.Width);
+            double height = Math.Ceiling(textSizeF.Height);
+
+
+            return new Rectangle(0, 0, (int)width, (int)height);
         }
 
     }
