@@ -13,17 +13,24 @@ namespace CaptchaLibrary
         private Bitmap _bitmap;
         private int _imageWidth;
         private int _imageHeight;
-
         public SolidBrush LinesColor
         { get; set; }
         public String ImageFilePath { get; private set; }
-
         public SolidBrush BackgroundColor { get; set; }
         public SolidBrush FontColor { get; set; }
         public String DirectoryPath { get; set; }
-
         public int CodeLength { get; set; }
+        public int NumOfLines { get; set; }
 
+        /// <summary>
+        /// Get/Set Image Font
+        /// </summary>
+        public Font ImageFont { get; set; }
+
+        /// <summary>
+        /// Get Generate Text
+        /// </summary>
+        public String GeneratedCode { get; private set; }
 
         /// <summary>
         /// Constructor
@@ -49,20 +56,6 @@ namespace CaptchaLibrary
             LinesColor = new SolidBrush(Color.Gray);
             NumOfLines = 10;
         }
-
-        public int NumOfLines { get; set; }
-
-
-        /// <summary>
-        /// Get/Set Image Font
-        /// </summary>
-        public Font ImageFont { get; set; }
-
-        /// <summary>
-        /// Get Generate Text
-        /// </summary>
-        public String GeneratedCode { get; private set; }
-
 
         /// <summary>
         /// Reset all values for the class.
@@ -115,40 +108,6 @@ namespace CaptchaLibrary
             }
 
             return GeneratedCode.Equals(Convert.ToString(strInputFromUser)) ? true : false;
-        }
-
-        /// <summary>
-        /// Generate an Image.
-        /// </summary>
-        /// <param name="strPath"></param>
-        private void CreateImage()
-        {
-            string code = GenerateRandomText();
-
-            Bitmap bitmap = new Bitmap(_imageWidth, _imageHeight, PixelFormat.Format32bppArgb);
-            Graphics g = Graphics.FromImage(bitmap);
-
-            Rectangle rect = new Rectangle(0, 0, _imageWidth, _imageHeight);
-
-            SolidBrush blkBrush = new SolidBrush(Color.Black);
-            SolidBrush whtBrush = new SolidBrush(Color.White);
-
-            int ipxlOffset = 0;
-
-            g.DrawRectangle(new Pen(Color.Yellow), rect);
-
-            g.FillRectangle(blkBrush, rect);
-
-            for (int i = 0; i < code.Length; i++)
-            {
-                g.DrawString(code[i].ToString(),
-                           ImageFont,
-                            whtBrush, new PointF(10 + ipxlOffset, 10));
-
-                ipxlOffset += 20;
-            }
-
-            DrawRandomLines(g);
         }
 
         /// <summary>
