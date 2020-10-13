@@ -43,7 +43,7 @@ namespace CaptchaLibrary
             GeneratedCode = "";
             _imageWidth = ImageWidth;
             _imageHeight = ImageHeight;
-            ImageFont = new Font("Tahoma", 10 + _Rand.Next(14, 18));
+            ImageFont = new Font("Tahoma", 16);
             BackgroundColor = new SolidBrush(Color.Black);
             FontColor = new SolidBrush(Color.White);
             LinesColor = new SolidBrush(Color.Gray);
@@ -194,16 +194,21 @@ namespace CaptchaLibrary
         private Bitmap CreateImageBitmap_v2()
         {
             string code = GenerateRandomText();
-            this.GeneratedCode = code;
+            GeneratedCode = code;
             if (_bitmap != null)
                 _bitmap.Dispose();
 
+            Rectangle rectangle = CalcTextRectangle(GeneratedCode, ImageFont);
+            _imageWidth = rectangle.Width;
+            _imageHeight = rectangle.Height+20;
+            int charWidth = _imageWidth / code.Length;
+            //_imageWidth += code.Length * charWidth;
 
             _bitmap = new Bitmap(_imageWidth, _imageHeight, PixelFormat.Format32bppArgb);
+
             Graphics g = Graphics.FromImage(_bitmap);
 
             Rectangle rect = new Rectangle(0, 0, _imageWidth, _imageHeight);
-
 
             int ipxlOffset = 0;
 
@@ -213,15 +218,16 @@ namespace CaptchaLibrary
 
             for (int i = 0; i < code.Length; i++)
             {
+               
                 g.DrawString(code[i].ToString(),
-                           ImageFont,
-                            FontColor,
-                            new PointF(_imageWidth / 20 + ipxlOffset, _imageWidth / 20));
-
-                ipxlOffset += _imageWidth / 10;
+                       ImageFont,
+                       FontColor,
+                       new PointF(ipxlOffset, charWidth));
+                
+                ipxlOffset += (charWidth);
             }
 
-            DrawRandomLines(g);
+         //   DrawRandomLines(g);
 
             return _bitmap;
         }
@@ -311,7 +317,8 @@ namespace CaptchaLibrary
         /// <returns></returns>
         public bool GenerateCaptcha()
         {
-            Bitmap bitmap = CreateImageBitmap();
+            // Bitmap bitmap = CreateImageBitmap();
+            Bitmap bitmap = CreateImageBitmap_v2();
             String strFileName = GenerateFileName();
             return SaveBitmapToFile(strFileName);
         }
@@ -325,7 +332,7 @@ namespace CaptchaLibrary
         /// <param name="style"></param>
         /// <param name="color"></param>
         /// <returns></returns>
-        public Rectangle CalcTextRectangle(string text, string fontFamily, float fontSize, FontStyle style, Brush color)
+        public Rectangle CalcTextRectangle(string text, string fontFamily, float fontSize, FontStyle style)
         {
             Font font = new Font(fontFamily, fontSize, style);
             Bitmap bitmap = new Bitmap(1024, 1024, PixelFormat.Format32bppArgb);
@@ -337,6 +344,16 @@ namespace CaptchaLibrary
 
             return new Rectangle(0, 0, (int)width, (int)height);
         }
+        public Rectangle CalcTextRectangle(string text, Font font)
+        {
+            Bitmap bitmap = new Bitmap(1024, 1024, PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(bitmap);
+            SizeF textSizeF = g.MeasureString(text, font);
+            double width = Math.Ceiling(textSizeF.Width);
+            double height = Math.Ceiling(textSizeF.Height);
 
+
+            return new Rectangle(0, 0, (int)width, (int)height);
+        }
     }
 }

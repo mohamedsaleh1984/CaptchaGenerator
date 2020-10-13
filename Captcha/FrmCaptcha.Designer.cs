@@ -40,15 +40,15 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(275, 89);
+            this.pictureBox1.Size = new System.Drawing.Size(683, 89);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // txtInput
             // 
-            this.txtInput.Location = new System.Drawing.Point(85, 107);
+            this.txtInput.Location = new System.Drawing.Point(12, 107);
             this.txtInput.Name = "txtInput";
-            this.txtInput.Size = new System.Drawing.Size(100, 20);
+            this.txtInput.Size = new System.Drawing.Size(683, 20);
             this.txtInput.TabIndex = 0;
             // 
             // btnClose
@@ -85,7 +85,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(299, 168);
+            this.ClientSize = new System.Drawing.Size(893, 168);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnVerify);
