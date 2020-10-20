@@ -170,7 +170,6 @@ namespace CaptchaLibrary
                 Directory.CreateDirectory(DirectoryPath);
             }
 
-
             String strFullFilePath = DirectoryPath + "\\" + strFileName;
 
             if (File.Exists(strFullFilePath))
@@ -213,8 +212,5 @@ namespace CaptchaLibrary
             String strFileName = Helper.GenerateFileName();
             return SaveBitmapToFile(strFileName);
         }
-
-       
-       
     }
 }

@@ -26,7 +26,6 @@ namespace CaptchaLibrary
             return randomText;
         }
 
-
         /// <summary>
         /// Generate random points to place the line on the Bitmap
         /// </summary>
@@ -41,7 +40,6 @@ namespace CaptchaLibrary
 
             return points;
         }
-
 
         /// <summary>
         /// Generate Image File Name with BMP Extension.
