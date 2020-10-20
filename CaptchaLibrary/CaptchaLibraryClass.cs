@@ -156,30 +156,42 @@ namespace CaptchaLibrary
         /// <returns></returns>
         private Bitmap CreateImageBitmap_v2()
         {
+            //Generate Random Code
             string code = GenerateRandomText();
+
+            //Set it to currrent property to use it for verify
             GeneratedCode = code;
+
+            //Destroy the bitmap.
             if (_bitmap != null)
                 _bitmap.Dispose();
 
-
+            //Create a rectangle to hold the text.
             Rectangle rectangle = CalcTextRectangle(GeneratedCode, ImageFont);
             _imageWidth = rectangle.Width;
             _imageHeight = rectangle.Height+20;
 
+            //Caculate roughly the width of a Character. 
             int charWidth = _imageWidth / code.Length;
 
+            //Create new Bitmap
             _bitmap = new Bitmap(_imageWidth, _imageHeight, PixelFormat.Format32bppArgb);
 
+            //Created graphics GDI handler to paint 
             Graphics g = Graphics.FromImage(_bitmap);
 
+            //Create rectangle 
             Rectangle rect = new Rectangle(0, 0, _imageWidth, _imageHeight);
 
             int ipxlOffset = 0;
 
+            //Draw dummy rectangle with the Bitmap.
             g.DrawRectangle(new Pen(Color.Yellow), rect);
 
+            //Fill the rectangle with the choosen color.
             g.FillRectangle(BackgroundColor, rect);
 
+            //Draw Code text...
             for (int i = 0; i < code.Length; i++)
             {
                
@@ -191,7 +203,8 @@ namespace CaptchaLibrary
                 ipxlOffset += (charWidth);
             }
 
-         //   DrawRandomLines(g);
+            //Adding Strips to the Bitmap
+            DrawRandomLines(g);
 
             return _bitmap;
         }
@@ -300,10 +313,10 @@ namespace CaptchaLibrary
             Bitmap bitmap = new Bitmap(1024, 1024, PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(bitmap);
             SizeF textSizeF = g.MeasureString(text, font);
+
             double width = Math.Ceiling(textSizeF.Width);
             double height = Math.Ceiling(textSizeF.Height);
-
-
+            
             return new Rectangle(0, 0, (int)width, (int)height);
         }
     }
