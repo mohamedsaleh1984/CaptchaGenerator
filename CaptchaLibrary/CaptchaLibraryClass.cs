@@ -67,17 +67,7 @@ namespace CaptchaLibrary
             DirectoryPath = "";
         }
 
-        /// <summary>
-        /// Generate random points to place tge characters in the Bitmap.
-        /// </summary>
-        /// <returns></returns>
-        private Point[] GetRandomPoints()
-        {
-            Point[] points = { new Point(_Rand.Next(0, _imageWidth), _imageHeight),
-                               new Point(_Rand.Next(0, _imageWidth),0) };
-
-            return points;
-        }
+       
 
         /// <summary>
         /// Check if the given string matched with generated code.
@@ -151,7 +141,7 @@ namespace CaptchaLibrary
                 _bitmap.Dispose();
 
             //Create a rectangle to hold the text.
-            Rectangle rectangle = CalcTextRectangle(GeneratedCode, ImageFont);
+            Rectangle rectangle = Helper.CalcTextRectangle(GeneratedCode, ImageFont);
             _imageWidth = rectangle.Width;
             _imageHeight = rectangle.Height+20;
 
@@ -201,27 +191,11 @@ namespace CaptchaLibrary
         {
             for (int i = 0; i < NumOfLines; i++)
             {
-                g.DrawLines(new Pen(LinesColor, 2), GetRandomPoints());
+                g.DrawLines(new Pen(LinesColor, 2), Helper.GetRandomPoints(_imageWidth,_imageHeight));
             }
         }
 
-        /// <summary>
-        /// Generate Image File Name with Extension.
-        /// </summary>
-        /// <returns></returns>
-        private String GenerateFileName()
-        {
-            string strFileName = DateTime.Now.Year.ToString() +
-                                DateTime.Now.Month.ToString() +
-                                DateTime.Now.Day.ToString() +
-                                DateTime.Now.Hour.ToString() +
-                                DateTime.Now.Minute.ToString() +
-                                DateTime.Now.Second.ToString();
-
-            strFileName += ".bmp";
-            return strFileName;
-
-        }
+      
 
         /// <summary>
         /// Save Bitmap to File
@@ -281,27 +255,11 @@ namespace CaptchaLibrary
         {
             // Bitmap bitmap = CreateImageBitmap();
             _bitmap = CreateImageBitmap_v2();
-            String strFileName = GenerateFileName();
+            String strFileName = Helper.GenerateFileName();
             return SaveBitmapToFile(strFileName);
         }
 
        
-        /// <summary>
-        /// Calculate generated text code width and height based on font size
-        /// </summary>
-        /// <param name="text">Text Input</param>
-        /// <param name="font">Font</param>
-        /// <returns></returns>
-        private Rectangle CalcTextRectangle(string text, Font font)
-        {
-            Bitmap bitmap = new Bitmap(1024, 1024, PixelFormat.Format32bppArgb);
-            Graphics g = Graphics.FromImage(bitmap);
-            SizeF textSizeF = g.MeasureString(text, font);
-
-            double width = Math.Ceiling(textSizeF.Width);
-            double height = Math.Ceiling(textSizeF.Height);
-            
-            return new Rectangle(0, 0, (int)width, (int)height);
-        }
+       
     }
 }

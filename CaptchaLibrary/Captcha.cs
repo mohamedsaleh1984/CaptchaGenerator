@@ -51,11 +51,32 @@ namespace CaptchaLibrary
             return _instance;
         }
 
-        public Captcha WithTextLength(int length)
+        public Captcha WithBackgroundColor(Color color)
         {
-            _instance.CodeLength = length;
+            SolidBrush solid = new SolidBrush(color);
+            _instance.BackgroundColor = solid;
             return _instance;
         }
+
+        public Captcha WithNumberOfStrips(int numOfStrips)
+        {
+            _instance.NumOfLines = numOfStrips;
+            return _instance;
+        }
+
+        public Captcha WithStripsColor(Color color) {
+            _instance.LinesColor = new SolidBrush(color);
+            return _instance;
+        }
+        /// <summary>
+        /// Reset all values for the class.
+        /// </summary>
+        public void Reset()
+        {
+            _instance = new Captcha();
+        }
+
+
 
 
     }
