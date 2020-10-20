@@ -65,13 +65,13 @@ namespace CaptchaWebAPI.Controllers
         }
 
         /// <summary>
-        /// Generate Captcha code with Specific background color and length.
+        /// Generate Captcha code with Specific background color, length and Number of Strips.
         /// </summary>
         /// <param name="codeLength">Length of the Code</param>
         /// <param name="backgroundColor">Background Color i.e Black,Red..etc</param>
         /// <param name="numOfLines">Number of lines across the Captcha</param>
         /// <returns></returns>
-        [Route("api/Captcha/Generate/strips/{codeLength:int}/{backgroundColor}/{numOfLines}")]
+        [Route("api/Captcha/Generate/{codeLength:int}/{backgroundColor}/{numOfLines}")]
         [HttpGet]
         public Captcha GenerateWithLines(int codeLength = 5, string backgroundColor = "Black", int numOfLines=5)
         {
@@ -87,6 +87,39 @@ namespace CaptchaWebAPI.Controllers
             return Get();
         }
 
-        
+        /// <summary>
+        /// Generate Captcha code with Specific background color, length, number of strips and color of strips.
+        /// </summary>
+        /// <param name="codeLength">Length of the Code</param>
+        /// <param name="backgroundColor">Background Color i.e Black,Red..etc</param>
+        /// <param name="numOfLines">Number of lines across the Captcha</param>
+        /// <
+        /// <returns></returns>
+        [Route("api/Captcha/Generate/{codeLength:int}/{backgroundColor}/{numOfLines}/{linesColor}")]
+        [HttpGet]
+        public Captcha GenerateWithColoredLines(int codeLength = 5,
+                                        string backgroundColor = "Black",
+                                        int numOfLines = 5,
+                                        string linesColor ="Gray")
+        {
+            cls = new CaptchaLibrary.CaptchaLibraryClass(codeLength);
+            Color selectedColor = Color.FromName(backgroundColor);
+
+            cls.BackgroundColor = new System.Drawing.SolidBrush(selectedColor);
+            if (cls.BackgroundColor == null)
+            {
+                cls.BackgroundColor = new System.Drawing.SolidBrush(Color.Black);
+            }
+            cls.NumOfLines = numOfLines;
+
+            Color clinesColor = Color.FromName(linesColor);
+            cls.LinesColor = new System.Drawing.SolidBrush(clinesColor);
+            if (cls.LinesColor == null)
+            {
+                cls.LinesColor = new System.Drawing.SolidBrush(Color.Gray);
+            }
+            
+            return Get();
+        }
     }
 }
