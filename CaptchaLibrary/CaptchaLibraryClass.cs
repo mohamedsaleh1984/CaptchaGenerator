@@ -80,23 +80,6 @@ namespace CaptchaLibrary
         }
 
         /// <summary>
-        /// Generate random text.
-        /// </summary>
-        /// <returns></returns>
-        private string GenerateRandomText()
-        {
-            string randomText = "";
-            string alphabets = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            Random r = new Random();
-
-            for (int j = 0; j < CodeLength; j++)
-                randomText = randomText + alphabets[r.Next(alphabets.Length)];
-
-            GeneratedCode = randomText.ToString();
-            return GeneratedCode;
-        }
-
-        /// <summary>
         /// Check if the given string matched with generated code.
         /// </summary>
         /// <param name="strInputFromUser"></param>
@@ -117,7 +100,7 @@ namespace CaptchaLibrary
         /// <returns></returns>
         private Bitmap CreateImageBitmap()
         {
-            string code = GenerateRandomText();
+            string code = Helper.GenerateRandomText(CodeLength);
             this.GeneratedCode = code;
             if (_bitmap != null)
                 _bitmap.Dispose();
@@ -158,7 +141,7 @@ namespace CaptchaLibrary
         private Bitmap CreateImageBitmap_v2()
         {
             //Generate Random Code
-            string code = GenerateRandomText();
+            string code = Helper.GenerateRandomText(CodeLength);
 
             //Set it to currrent property to use it for verify
             GeneratedCode = code;

@@ -17,9 +17,11 @@ namespace CaptchaWebAPI.Controllers
         /// </summary>
         public CaptchaController()
         {
-            cls = new CaptchaLibrary.CaptchaLibraryClass();
-            cls.NumOfLines = 5;
-            cls.BackgroundColor = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
+            cls = new CaptchaLibrary.CaptchaLibraryClass
+            {
+                NumOfLines = 5,
+                BackgroundColor = new System.Drawing.SolidBrush(System.Drawing.Color.Black)
+            };
         }
 
 
@@ -73,9 +75,16 @@ namespace CaptchaWebAPI.Controllers
         /// <returns></returns>
         [Route("api/Captcha/Generate/{codeLength:int}/{backgroundColor}/{numOfLines}")]
         [HttpGet]
-        public Captcha GenerateWithLines(int codeLength = 5, string backgroundColor = "Black", int numOfLines=5)
+        public Captcha GenerateWithLines(int codeLength = 5, string backgroundColor = "Black", int numOfLines = 5)
         {
-            Generate(codeLength, backgroundColor);
+            cls = new CaptchaLibrary.CaptchaLibraryClass(codeLength);
+            Color selectedColor = Color.FromName(backgroundColor);
+
+            cls.BackgroundColor = new System.Drawing.SolidBrush(selectedColor);
+            if (cls.BackgroundColor == null)
+            {
+                cls.BackgroundColor = new System.Drawing.SolidBrush(Color.Black);
+            }
             cls.NumOfLines = numOfLines;
             return Get();
         }
@@ -86,16 +95,24 @@ namespace CaptchaWebAPI.Controllers
         /// <param name="codeLength">Length of the Code</param>
         /// <param name="backgroundColor">Background Color i.e Black,Red..etc</param>
         /// <param name="numOfLines">Number of lines across the Captcha</param>
-        /// <
+        /// <param name="linesColor">Strips Color</param>
         /// <returns></returns>
         [Route("api/Captcha/Generate/{codeLength:int}/{backgroundColor}/{numOfLines}/{linesColor}")]
         [HttpGet]
         public Captcha GenerateWithColoredLines(int codeLength = 5,
                                         string backgroundColor = "Black",
                                         int numOfLines = 5,
-                                        string linesColor ="Gray")
+                                        string linesColor = "Gray")
         {
-            GenerateWithColoredLines(codeLength, backgroundColor, numOfLines);
+            cls = new CaptchaLibrary.CaptchaLibraryClass(codeLength);
+            Color selectedColor = Color.FromName(backgroundColor);
+
+            cls.BackgroundColor = new System.Drawing.SolidBrush(selectedColor);
+            if (cls.BackgroundColor == null)
+            {
+                cls.BackgroundColor = new System.Drawing.SolidBrush(Color.Black);
+            }
+            cls.NumOfLines = numOfLines;
 
             Color clinesColor = Color.FromName(linesColor);
             cls.LinesColor = new System.Drawing.SolidBrush(clinesColor);
@@ -103,7 +120,7 @@ namespace CaptchaWebAPI.Controllers
             {
                 cls.LinesColor = new System.Drawing.SolidBrush(Color.Gray);
             }
-            
+
             return Get();
         }
     }

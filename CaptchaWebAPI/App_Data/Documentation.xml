@@ -515,7 +515,27 @@
             <param name="numOfLines">Number of lines across the Captcha</param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:CaptchaWebAPI.Controllers.CaptchaController.GenerateWithColoredLines(System.Int32,System.String,System.Int32,System.String)" -->
+        <member name="M:CaptchaWebAPI.Controllers.CaptchaController.GenerateWithColoredLines(System.Int32,System.String,System.Int32,System.String)">
+            <summary>
+            Generate Captcha code with Specific background color, length, number of strips and color of strips.
+            </summary>
+            <param name="codeLength">Length of the Code</param>
+            <param name="backgroundColor">Background Color i.e Black,Red..etc</param>
+            <param name="numOfLines">Number of lines across the Captcha</param>
+            <param name="linesColor">Strips Color</param>
+            <returns></returns>
+        </member>
+        <member name="T:CaptchaWebAPI.Controllers.HomeController">
+            <summary>
+            Home Controller for Home Page
+            </summary>
+        </member>
+        <member name="M:CaptchaWebAPI.Controllers.HomeController.Index">
+            <summary>
+            Default action method.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:CaptchaWebAPI.Models.Captcha">
             <summary>
             Captcha Domain Class
