@@ -55,9 +55,16 @@ namespace Captcha
             if (pictureBox1.Image != null)
                 pictureBox1.Image.Dispose();
 
-            cls.GenerateCaptcha();
-            code = cls.GeneratedCode;
-            this.txtInput.Text = code;
+            CaptchaLibrary.Captcha c = new CaptchaLibrary.Captcha()
+                                        .WithBackgroundColor(Color.AliceBlue)
+                                        .WithFontNameAndSize("Arial", 18)
+                                        .WithNumberOfStrips(5)
+                                        .WithTextLength(10)
+                                        .WithStripsColor(Color.Red);
+
+
+            c.GenerateCaptcha();
+            this.txtInput.Text = c.GeneratedCode;
             pictureBox1.Image = Image.FromFile(cls.ImageFilePath);
 
         }

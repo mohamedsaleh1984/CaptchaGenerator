@@ -21,10 +21,10 @@ namespace CaptchaLibrary
         private int _imageHeight;
         public SolidBrush LinesColor
         { get; set; }
-        public String ImageFilePath { get; private set; }
+        public string ImageFilePath { get; private set; }
         public SolidBrush BackgroundColor { get; set; }
         public SolidBrush FontColor { get; set; }
-        public String DirectoryPath { get; set; }
+        public string DirectoryPath { get; set; }
         public int CodeLength { get; set; }
         public int NumOfLines { get; set; }
 
@@ -36,17 +36,20 @@ namespace CaptchaLibrary
         /// <summary>
         /// Get Generate Text
         /// </summary>
-        public String GeneratedCode { get; private set; }
+        public string GeneratedCode { get; private set; }
         /// <summary>
         /// Instance of Captcha class
         /// </summary>
-        private Captcha _instance;
+        private Captcha _instance  = new Captcha();
         /// <summary>
         /// Default Constructor
         /// </summary>
         public Captcha() {
-            _instance = new Captcha();
             _Rand = new Random();
+        }
+
+        public Captcha Build() {
+            return _instance;
         }
 
         /// <summary>
@@ -54,9 +57,8 @@ namespace CaptchaLibrary
         /// </summary>
         /// <param name="length"></param>
         /// <returns></returns>
-        public Captcha WithTextLength(int length) {
+        public void WithTextLength(int length) {
             _instance.CodeLength = length;
-            return _instance;
         }
 
         /// <summary>
@@ -64,11 +66,10 @@ namespace CaptchaLibrary
         /// </summary>
         /// <param name="color"></param>
         /// <returns></returns>
-        public Captcha WithBackgroundColor(Color color)
+        public void WithBackgroundColor(Color color)
         {
             SolidBrush solid = new SolidBrush(color);
             _instance.BackgroundColor = solid;
-            return _instance;
         }
 
         /// <summary>
@@ -76,10 +77,9 @@ namespace CaptchaLibrary
         /// </summary>
         /// <param name="numOfStrips"></param>
         /// <returns></returns>
-        public Captcha WithNumberOfStrips(int numOfStrips)
+        public void WithNumberOfStrips(int numOfStrips)
         {
             _instance.NumOfLines = numOfStrips;
-            return _instance;
         }
 
         /// <summary>
@@ -87,9 +87,8 @@ namespace CaptchaLibrary
         /// </summary>
         /// <param name="color"></param>
         /// <returns></returns>
-        public Captcha WithStripsColor(Color color) {
+        public void WithStripsColor(Color color) {
             _instance.LinesColor = new SolidBrush(color);
-            return _instance;
         }
 
 
@@ -99,12 +98,13 @@ namespace CaptchaLibrary
         /// <param name="fontName">Font Name</param>
         /// <param name="fontSize">Font Size</param>
         /// <returns></returns>
-        public Captcha WithFontNameAndSize(string fontName, float fontSize)
+        public void WithFontNameAndSize(string fontName, float fontSize)
         {
             Font font = new Font(fontName, fontSize);
             if (font != null)
                 _instance.ImageFont = font;
-            return _instance;
+            else
+                _instance.ImageFont = new Font("Tahoma", 16);//default font.
         }
 
 
@@ -121,10 +121,9 @@ namespace CaptchaLibrary
         /// </summary>
         /// <param name="width"></param>
         /// <returns></returns>
-        public Captcha WithWidth(int width)
+        public void WithWidth(int width)
         {
             _instance._imageWidth = width;
-            return _instance;
         }
 
         /// <summary>
@@ -132,9 +131,8 @@ namespace CaptchaLibrary
         /// </summary>
         /// <param name="height"></param>
         /// <returns></returns>
-        public Captcha WithHeight(int height) {
+        public void WithHeight(int height) {
             _instance._imageHeight = height;
-            return _instance;
         }
 
         /// <summary>
