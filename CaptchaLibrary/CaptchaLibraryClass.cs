@@ -296,7 +296,7 @@ namespace CaptchaLibrary
         public bool GenerateCaptcha()
         {
             // Bitmap bitmap = CreateImageBitmap();
-            Bitmap bitmap = CreateImageBitmap_v2();
+            _bitmap = CreateImageBitmap_v2();
             String strFileName = GenerateFileName();
             return SaveBitmapToFile(strFileName);
         }

@@ -75,14 +75,7 @@ namespace CaptchaWebAPI.Controllers
         [HttpGet]
         public Captcha GenerateWithLines(int codeLength = 5, string backgroundColor = "Black", int numOfLines=5)
         {
-            cls = new CaptchaLibrary.CaptchaLibraryClass(codeLength, "", 200, 50);
-            Color selectedColor = Color.FromName(backgroundColor);
-
-            cls.BackgroundColor = new System.Drawing.SolidBrush(selectedColor);
-            if (cls.BackgroundColor == null)
-            {
-                cls.BackgroundColor = new System.Drawing.SolidBrush(Color.Black);
-            }
+            Generate(codeLength, backgroundColor);
             cls.NumOfLines = numOfLines;
             return Get();
         }
@@ -102,15 +95,7 @@ namespace CaptchaWebAPI.Controllers
                                         int numOfLines = 5,
                                         string linesColor ="Gray")
         {
-            cls = new CaptchaLibrary.CaptchaLibraryClass(codeLength);
-            Color selectedColor = Color.FromName(backgroundColor);
-
-            cls.BackgroundColor = new System.Drawing.SolidBrush(selectedColor);
-            if (cls.BackgroundColor == null)
-            {
-                cls.BackgroundColor = new System.Drawing.SolidBrush(Color.Black);
-            }
-            cls.NumOfLines = numOfLines;
+            GenerateWithColoredLines(codeLength, backgroundColor, numOfLines);
 
             Color clinesColor = Color.FromName(linesColor);
             cls.LinesColor = new System.Drawing.SolidBrush(clinesColor);
