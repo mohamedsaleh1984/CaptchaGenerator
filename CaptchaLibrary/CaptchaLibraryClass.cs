@@ -73,8 +73,9 @@ namespace CaptchaLibrary
         /// <returns></returns>
         private Point[] GetRandomPoints()
         {
-            Point[] points = { new Point(_Rand.Next(10, 150), _Rand.Next(10, 150)),
-                               new Point(_Rand.Next(10, 100), _Rand.Next(10, 100)) };
+            Point[] points = { new Point(_Rand.Next(0, _imageWidth), _imageHeight),
+                               new Point(_Rand.Next(0, _imageWidth),0) };
+
             return points;
         }
 
