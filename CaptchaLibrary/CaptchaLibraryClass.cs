@@ -67,8 +67,6 @@ namespace CaptchaLibrary
             DirectoryPath = "";
         }
 
-       
-
         /// <summary>
         /// Check if the given string matched with generated code.
         /// </summary>
@@ -84,51 +82,12 @@ namespace CaptchaLibrary
             return GeneratedCode.Equals(Convert.ToString(strInputFromUser)) ? true : false;
         }
 
-        /// <summary>
-        /// Generate an Image and return Bitmap, version 0.1 with fixed Height and Width
-        /// </summary>
-        /// <returns></returns>
-        private Bitmap CreateImageBitmap()
-        {
-            string code = Helper.GenerateRandomText(CodeLength);
-            this.GeneratedCode = code;
-            if (_bitmap != null)
-                _bitmap.Dispose();
-
-
-            _bitmap = new Bitmap(_imageWidth, _imageHeight, PixelFormat.Format32bppArgb);
-            Graphics g = Graphics.FromImage(_bitmap);
-
-            Rectangle rect = new Rectangle(0, 0, _imageWidth, _imageHeight);
-
-
-            int ipxlOffset = 0;
-
-            g.DrawRectangle(new Pen(Color.Yellow), rect);
-
-            g.FillRectangle(BackgroundColor, rect);
-
-            for (int i = 0; i < code.Length; i++)
-            {
-                g.DrawString(code[i].ToString(),
-                           ImageFont,
-                            FontColor,
-                            new PointF(_imageWidth / 20 + ipxlOffset, _imageWidth / 20));
-
-                ipxlOffset += _imageWidth / 10;
-            }
-
-            DrawRandomLines(g);
-
-            return _bitmap;
-        }
-
-
+        
         /// <summary>
         /// Create dynamic bitmap based on generated text.
         /// </summary>
         /// <returns></returns>
-        private Bitmap CreateImageBitmap_v2()
+        private Bitmap CreateImageBitmap()
         {
             //Generate Random Code
             string code = Helper.GenerateRandomText(CodeLength);
@@ -195,8 +154,6 @@ namespace CaptchaLibrary
             }
         }
 
-      
-
         /// <summary>
         /// Save Bitmap to File
         /// </summary>
@@ -204,7 +161,6 @@ namespace CaptchaLibrary
         /// <returns></returns>
         public Boolean SaveBitmapToFile(String strFileName)
         {
-            
             if(String.IsNullOrEmpty(DirectoryPath))
             {
                 DirectoryPath = System.IO.Directory.GetCurrentDirectory();
@@ -253,8 +209,7 @@ namespace CaptchaLibrary
         /// <returns></returns>
         public bool GenerateCaptcha()
         {
-            // Bitmap bitmap = CreateImageBitmap();
-            _bitmap = CreateImageBitmap_v2();
+            _bitmap = CreateImageBitmap();
             String strFileName = Helper.GenerateFileName();
             return SaveBitmapToFile(strFileName);
         }
