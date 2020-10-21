@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using System.IO;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
+using Captcha;
 using CaptchaLibrary;
-using System.Drawing.Text;
 
 namespace Captcha
 {
     public partial class FrmCaptcha : Form
     {
-        private CaptchaLibrary.CaptchaLibraryClass cls;
         private string code;
 
         public FrmCaptcha()
@@ -22,8 +17,7 @@ namespace Captcha
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
-        //    GenerateImage();
+        { 
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -41,12 +35,7 @@ namespace Captcha
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            Random r = new Random();
-            cls = new CaptchaLibraryClass(ImageWidth: 200, ImageHeight: 50);
-            cls.BackgroundColor = new SolidBrush(Color.Blue);
-            cls.LinesColor = new SolidBrush(Color.Black);
-            cls.NumOfLines = 5;
-            cls.CodeLength = r.Next(5,60);
+            
             GenerateImage();
         }
 
@@ -55,17 +44,21 @@ namespace Captcha
             if (pictureBox1.Image != null)
                 pictureBox1.Image.Dispose();
 
-            CaptchaLibrary.Captcha c = new CaptchaLibrary.Captcha()
-                                        .WithBackgroundColor(Color.AliceBlue)
-                                        .WithFontNameAndSize("Arial", 18)
-                                        .WithNumberOfStrips(5)
-                                        .WithTextLength(10)
-                                        .WithStripsColor(Color.Red);
+            CaptchaLibrary.Captcha captcha;
+            CaptchaBuilder captchaBuilder = new CaptchaBuilder();
+            captchaBuilder.WithBackgroundColor(Color.Red);
+            captchaBuilder.WithFontColor(Color.Aqua);
+            captchaBuilder.WithTextLength(5);
+            captchaBuilder.WithFontNameAndSize("Arial", 16);
+            captchaBuilder.WithNumberOfStrips(15);
+            captchaBuilder.WithStripsColor(Color.AliceBlue);
+            captcha = captchaBuilder.Build();
 
 
-            c.GenerateCaptcha();
-            this.txtInput.Text = c.GeneratedCode;
-            pictureBox1.Image = Image.FromFile(cls.ImageFilePath);
+
+            captcha.GenerateCaptcha();
+            txtInput.Text = captcha.GeneratedCode;
+            pictureBox1.Image = Image.FromFile(captcha.ImageFilePath);
 
         }
     }

@@ -31,7 +31,7 @@ namespace CaptchaLibrary
         /// <summary>
         /// Get/Set Image Font
         /// </summary>
-        public Font ImageFont { get; set; }
+        public Font CaptchaFont { get; set; }
 
         /// <summary>
         /// Get Generate Text
@@ -40,99 +40,27 @@ namespace CaptchaLibrary
         /// <summary>
         /// Instance of Captcha class
         /// </summary>
-        private Captcha _instance  = new Captcha();
+        /*
+        private  Captcha instance {
+           get
+            {
+                return _instance;
+            }
+            set
+            {
+                _instance = new Captcha();
+            }
+        }
+        */
+
+        private static Captcha _instance = null;
+
         /// <summary>
         /// Default Constructor
         /// </summary>
         public Captcha() {
             _Rand = new Random();
-        }
-
-        public Captcha Build() {
-            return _instance;
-        }
-
-        /// <summary>
-        /// Adding Generated Text Length
-        /// </summary>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        public void WithTextLength(int length) {
-            _instance.CodeLength = length;
-        }
-
-        /// <summary>
-        /// Adding Background Color of the Bitmap
-        /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        public void WithBackgroundColor(Color color)
-        {
-            SolidBrush solid = new SolidBrush(color);
-            _instance.BackgroundColor = solid;
-        }
-
-        /// <summary>
-        /// Adding Number of Strips on the Bitmap
-        /// </summary>
-        /// <param name="numOfStrips"></param>
-        /// <returns></returns>
-        public void WithNumberOfStrips(int numOfStrips)
-        {
-            _instance.NumOfLines = numOfStrips;
-        }
-
-        /// <summary>
-        /// Adding Strips Color
-        /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        public void WithStripsColor(Color color) {
-            _instance.LinesColor = new SolidBrush(color);
-        }
-
-
-        /// <summary>
-        /// Add Font name, size to Captcha.
-        /// </summary>
-        /// <param name="fontName">Font Name</param>
-        /// <param name="fontSize">Font Size</param>
-        /// <returns></returns>
-        public void WithFontNameAndSize(string fontName, float fontSize)
-        {
-            Font font = new Font(fontName, fontSize);
-            if (font != null)
-                _instance.ImageFont = font;
-            else
-                _instance.ImageFont = new Font("Tahoma", 16);//default font.
-        }
-
-
-        /// <summary>
-        /// Reset all values for the class.
-        /// </summary>
-        public void Reset()
-        {
-            _instance = new Captcha();
-        }
-
-        /// <summary>
-        /// Add width.
-        /// </summary>
-        /// <param name="width"></param>
-        /// <returns></returns>
-        public void WithWidth(int width)
-        {
-            _instance._imageWidth = width;
-        }
-
-        /// <summary>
-        /// Add height.
-        /// </summary>
-        /// <param name="height"></param>
-        /// <returns></returns>
-        public void WithHeight(int height) {
-            _instance._imageHeight = height;
+            _instance = null;
         }
 
         /// <summary>
@@ -167,7 +95,7 @@ namespace CaptchaLibrary
                 _bitmap.Dispose();
 
             //Create a rectangle to hold the text.
-            Rectangle rectangle = Helper.CalcTextRectangle(GeneratedCode, ImageFont);
+            Rectangle rectangle = Helper.CalcTextRectangle(GeneratedCode, CaptchaFont);
             _imageWidth = rectangle.Width;
             _imageHeight = rectangle.Height + 20;
 
@@ -196,7 +124,7 @@ namespace CaptchaLibrary
             {
 
                 g.DrawString(code[i].ToString(),
-                       ImageFont,
+                       CaptchaFont,
                        FontColor,
                        new PointF(ipxlOffset, charWidth));
 
@@ -226,7 +154,7 @@ namespace CaptchaLibrary
         /// </summary>
         /// <param name="strFileName"></param>
         /// <returns></returns>
-        public Boolean SaveBitmapToFile(String strFileName)
+        public bool SaveBitmapToFile(String strFileName)
         {
             if (String.IsNullOrEmpty(DirectoryPath))
             {

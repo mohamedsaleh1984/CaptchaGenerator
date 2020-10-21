@@ -35,10 +35,32 @@ namespace CaptchaLibrary
         public static Point[] GetRandomPoints(int width,int height)
         {
             Random _Rand = new Random();
-            Point[] points = { new Point(_Rand.Next(0, width), height),
-                               new Point(_Rand.Next(0, width),0) };
+            Point[] points = { new Point(0, 0),
+                               new Point(_Rand.Next(0, width),_Rand.Next(0, height)) };
 
             return points;
+        }
+        public static Point[] GetRandomPoints(int width, int height,Random r)
+        {
+            Point[] points = { new Point(0, 0),
+                               new Point(r.Next(0, width),r.Next(0, height)) };
+
+            return points;
+        }
+        public static List<Point[]> GenerateLinesStartEndPoints(int numOfLines, int width, int height)
+        {
+            Random _Rand = new Random();
+            List<Point[]> list = new List<Point[]>();
+
+            for (int i = 0; i < numOfLines; i++)
+            {
+                Point[] points = { new Point(0, 0),
+                               new Point(_Rand.Next(0, width),_Rand.Next(0, height)) };
+                list.Add(points);
+            }
+
+            return list;
+           
         }
 
         /// <summary>
