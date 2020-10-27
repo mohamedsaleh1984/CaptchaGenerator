@@ -54,11 +54,8 @@ namespace CaptchaLibrary
             List<Point[]> list = new List<Point[]>();
 
             for (int i = 0; i < numOfLines; i++)
-            {
-                Point[] points = { new Point(_Rand.Next(0, width), height),
-                               new Point(_Rand.Next(0, width),0) };
-                list.Add(points);
-            }
+                list.Add(GetRandomPoints(width,height));
+            
 
             return list;
            
