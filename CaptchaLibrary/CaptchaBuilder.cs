@@ -83,5 +83,20 @@ namespace CaptchaLibrary
         {
             _instance.FontColor = new SolidBrush(color);
         }
+
+        public void WithFontColorRGB(int r, int g, int b)
+        {
+            _instance.FontColor = new SolidBrush( Color.FromArgb(r, g, b));
+        }
+
+        public void WithBackgroundColorRGB(int r, int g, int b)
+        {
+            _instance.BackgroundColor = new SolidBrush(Color.FromArgb(r, g, b));
+        }
+
+        public void WithStripsColorRGB(int r, int g, int b)
+        {
+            _instance.LinesColor = new SolidBrush(Color.FromArgb(r, g, b));
+        }
     }
 }

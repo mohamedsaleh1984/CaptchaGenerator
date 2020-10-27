@@ -16,11 +16,28 @@ namespace CaptchaLibrary
         void WithFontColor(Color color);
 
         /// <summary>
+        /// Font Color
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="g"></param>
+        /// <param name="b"></param>
+        void WithFontColorRGB(int r,int g,int b);
+
+        /// <summary>
         /// Adding Background Color of the Bitmap
         /// </summary>
         /// <param name="color"></param>
         /// <returns></returns>
-         void WithBackgroundColor(Color color);
+        void WithBackgroundColor(Color color);
+
+        /// <summary>
+        /// Adding Background Color of the Bitmap
+        /// </summary>
+        /// <param name="r">Red</param>
+        /// <param name="g">Green</param>
+        /// <param name="b">Blue</param>
+        /// <returns></returns>
+        void WithBackgroundColorRGB(int r,int g,int b);
 
         /// <summary>
         /// Adding Number of Strips on the Bitmap
@@ -35,6 +52,15 @@ namespace CaptchaLibrary
         /// <param name="color"></param>
         /// <returns></returns>
         void WithStripsColor(Color color);
+
+        /// <summary>
+        /// Adding Strips Color
+        /// </summary>
+        /// <param name="r">Red</param>
+        /// <param name="b">Blue</param>
+        /// <param name="g">Green</param>
+        /// <returns></returns>
+        void WithStripsColorRGB(int r,int g,int b);
 
         /// <summary>
         /// Add Font name, size to Captcha.
