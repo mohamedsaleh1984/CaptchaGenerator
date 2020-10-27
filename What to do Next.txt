@@ -1,0 +1,5 @@
+1. Test the Builder
+2. Replace the service calls with Builder
+3. Test the Web Service
+4. Modifiy the Home Page
+5. Publish to Azure

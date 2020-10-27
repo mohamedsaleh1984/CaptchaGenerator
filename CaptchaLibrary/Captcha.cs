@@ -143,10 +143,11 @@ namespace CaptchaLibrary
         /// <param name="g"></param>
         private void DrawRandomLines(Graphics g)
         {
-            for (int i = 0; i < NumOfLines; i++)
-            {
-                g.DrawLines(new Pen(LinesColor, 2), Helper.GetRandomPoints(_imageWidth, _imageHeight));
-            }
+            List<Point[]> points = Helper.GenerateLinesStartEndPoints(this.NumOfLines, _imageWidth, _imageHeight);
+
+            foreach (var item in points)
+                g.DrawLines(new Pen(LinesColor, 2f), item);
+            
         }
 
         /// <summary>

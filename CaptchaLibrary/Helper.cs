@@ -27,7 +27,7 @@ namespace CaptchaLibrary
         }
 
         /// <summary>
-        /// Generate random points to place the line on the Bitmap
+        /// Generate random a point to place the line on the Bitmap
         /// </summary>
         /// <param name="width">Image Width</param>
         /// <param name="height">Image Height</param>
@@ -35,18 +35,19 @@ namespace CaptchaLibrary
         public static Point[] GetRandomPoints(int width,int height)
         {
             Random _Rand = new Random();
-            Point[] points = { new Point(0, 0),
-                               new Point(_Rand.Next(0, width),_Rand.Next(0, height)) };
+            Point[] points = { new Point(_Rand.Next(0, width), height),
+                               new Point(_Rand.Next(0, width),0) };
 
             return points;
         }
-        public static Point[] GetRandomPoints(int width, int height,Random r)
-        {
-            Point[] points = { new Point(0, 0),
-                               new Point(r.Next(0, width),r.Next(0, height)) };
-
-            return points;
-        }
+        
+        /// <summary>
+        /// Generate random points to place the lines on the Bitmap
+        /// </summary>
+        /// <param name="numOfLines">Number of Strips to be drawn on the bitmap</param>
+        /// <param name="width">Image Width</param>
+        /// <param name="height">Image Height</param>
+        /// <returns></returns>
         public static List<Point[]> GenerateLinesStartEndPoints(int numOfLines, int width, int height)
         {
             Random _Rand = new Random();
@@ -54,8 +55,8 @@ namespace CaptchaLibrary
 
             for (int i = 0; i < numOfLines; i++)
             {
-                Point[] points = { new Point(0, 0),
-                               new Point(_Rand.Next(0, width),_Rand.Next(0, height)) };
+                Point[] points = { new Point(_Rand.Next(0, width), height),
+                               new Point(_Rand.Next(0, width),0) };
                 list.Add(points);
             }
 
