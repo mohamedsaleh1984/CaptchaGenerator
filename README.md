@@ -2,7 +2,7 @@
 Generate customized captcha image via RESTful WebAPI <br/>
 Using ASP.NET MVC, GDI+<br/>
 
-The project is divided into 3 different solutions<br/> 
+The solution is divided into 3 different projects<br/> 
 1. CaptchaLibrary (DLL)
 2. Captcha (Windows Application)
 3. CaptchaWebAPI (ASP.NET MVC WebAPI)
