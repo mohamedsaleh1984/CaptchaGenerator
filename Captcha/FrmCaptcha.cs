@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 using Captcha;
 using CaptchaLibrary;
@@ -8,7 +9,7 @@ namespace Captcha
 {
     public partial class FrmCaptcha : Form
     {
-        private string code;
+        private string code = String.Empty;
 
         public FrmCaptcha()
         {
@@ -35,8 +36,34 @@ namespace Captcha
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            
-            GenerateImage();
+            //GenerateImage();
+            GenerateImages(); 
+        }
+
+        private void GenerateImages() {
+
+            CaptchaLibrary.Captcha captcha;
+            Random r;
+            int lenLines = 0;
+            CaptchaBuilder captchaBuilder;
+        
+            for (int i = 0; i < 10; i++) {
+                r = new Random();
+                captchaBuilder = new CaptchaBuilder();
+                captchaBuilder.WithBackgroundColorRGB(r.Next(0,255), r.Next(0, 255), r.Next(0, 255));
+                captchaBuilder.WithFontColorRGB(r.Next(0, 255), r.Next(0, 255), r.Next(0, 255));
+                 lenLines = r.Next(5, 40);
+                
+                captchaBuilder.WithTextLength(lenLines);
+                captchaBuilder.WithFontNameAndSize("Arial", 16);
+                captchaBuilder.WithNumberOfStrips(5);
+                captchaBuilder.WithStripsColorRGB(r.Next(0, 255), r.Next(0, 255), r.Next(0, 255));
+                captcha = captchaBuilder.Build();
+                captcha.GenerateCaptcha();
+             
+                Thread.Sleep(1000);
+            }
+            MessageBox.Show("Generating Process has been finished.");
         }
 
         private void GenerateImage()

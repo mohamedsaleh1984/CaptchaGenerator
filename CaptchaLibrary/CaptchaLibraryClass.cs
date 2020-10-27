@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -148,10 +149,11 @@ namespace CaptchaLibrary
         /// <param name="g"></param>
         private void DrawRandomLines(Graphics g)
         {
-           
+            List<Point[]> points = Helper.GenerateLinesStartEndPoints(NumOfLines, _imageWidth, _imageHeight);
+            
             for (int i = 0; i < NumOfLines; i++)
             {
-                g.DrawLines(new Pen(LinesColor, 2), Helper.GetRandomPoints(_imageWidth,_imageHeight));
+                g.DrawLines(new Pen(LinesColor, 2), points[i]);
             }
         }
 

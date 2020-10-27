@@ -25,21 +25,6 @@ namespace CaptchaLibrary
 
             return randomText;
         }
-
-        /// <summary>
-        /// Generate random a point to place the line on the Bitmap
-        /// </summary>
-        /// <param name="width">Image Width</param>
-        /// <param name="height">Image Height</param>
-        /// <returns></returns>
-        public static Point[] GetRandomPoints(int width,int height)
-        {
-            Random _Rand = new Random();
-            Point[] points = { new Point(_Rand.Next(0, width), height),
-                               new Point(_Rand.Next(0, width),0) };
-
-            return points;
-        }
         
         /// <summary>
         /// Generate random points to place the lines on the Bitmap
@@ -53,9 +38,11 @@ namespace CaptchaLibrary
             Random _Rand = new Random();
             List<Point[]> list = new List<Point[]>();
 
-            for (int i = 0; i < numOfLines; i++)
-                list.Add(GetRandomPoints(width,height));
-            
+            for (int i = 0; i < numOfLines; i++) {
+                Point[] points = { new Point(_Rand.Next(0, width), height),
+                               new Point(_Rand.Next(0, width),0) };
+                list.Add(points);
+ }
 
             return list;
            
