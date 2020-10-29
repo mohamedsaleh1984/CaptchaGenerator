@@ -104,6 +104,9 @@ namespace CaptchaLib.Builder
         /// <returns></returns>
         public void WithFontNameAndSize(string fontName, float fontSize)
         {
+            if(String.IsNullOrEmpty(fontName) || fontSize <= 0)
+                _instance.CaptchaFont = new Font("Tahoma", 16);//default font.
+           
             Font font = new Font(fontName, fontSize);
             if (font != null)
                 _instance.CaptchaFont = font;
@@ -131,16 +134,23 @@ namespace CaptchaLib.Builder
 
         public void WithFontColorRGB(int r, int g, int b)
         {
+            if(r < 0 || r > 255 || g<0||g>255||b<0||b>255)
+                r = g = b = 0; 
             _instance.FontColor = new SolidBrush( Color.FromArgb(r, g, b));
         }
 
         public void WithBackgroundColorRGB(int r, int g, int b)
         {
+            if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+                r = g = b = 0;
             _instance.BackgroundColor = new SolidBrush(Color.FromArgb(r, g, b));
         }
 
         public void WithStripsColorRGB(int r, int g, int b)
         {
+            if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+                r = g = b = 0;
+
             _instance.LinesColor = new SolidBrush(Color.FromArgb(r, g, b));
         }
     }

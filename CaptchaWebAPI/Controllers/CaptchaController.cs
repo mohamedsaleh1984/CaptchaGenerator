@@ -22,7 +22,6 @@ namespace CaptchaWebAPI.Controllers
             captchaBuilder.WithBackgroundColor(Color.Black);
         }
 
-
         /// <summary>
         /// Get request to generate new Captcha Image, return Image Path and Code
         /// GET: api/Captcha
@@ -79,7 +78,7 @@ namespace CaptchaWebAPI.Controllers
         /// <param name="backgroundColor">Background Color i.e Black,Red..etc</param>
         /// <param name="numOfLines">Number of lines across the Captcha</param>
         /// <returns></returns>
-        [Route("api/Captcha/Generate/{codeLength:int}/{backgroundColor}/{numOfLines}")]
+        [Route("api/Captcha/Generate/{codeLength:int}/{backgroundColor}/{numOfLines:int}")]
         [HttpGet]
         public CaptchaModel GenerateWithLines(int codeLength = 5, string backgroundColor = "Black", int numOfLines = 5)
         {
@@ -109,7 +108,7 @@ namespace CaptchaWebAPI.Controllers
         /// <param name="numOfLines">Number of lines across the Captcha</param>
         /// <param name="linesColor">Strips Color</param>
         /// <returns></returns>
-        [Route("api/Captcha/Generate/{codeLength:int}/{backgroundColor}/{numOfLines}/{linesColor}")]
+        [Route("api/Captcha/Generate/{codeLength:int}/{backgroundColor}/{numOfLines:int}/{linesColor}")]
         [HttpGet]
         public CaptchaModel GenerateWithColoredLines(int codeLength = 5,
                                         string backgroundColor = "Black",
@@ -134,5 +133,7 @@ namespace CaptchaWebAPI.Controllers
             }
             return null;
         }
+
+        
     }
 }

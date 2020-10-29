@@ -93,7 +93,16 @@ namespace CaptchaLib
             //Destroy the bitmap.
             if (_bitmap != null)
                 _bitmap.Dispose();
+            //check font
+            if (CaptchaFont == null)
+            {
+                CaptchaFont = new Font("Tahoma", 16);
+            }
 
+            if (FontColor == null)
+            {
+                FontColor = new SolidBrush(Color.Blue);
+            }
             //Create a rectangle to hold the text.
             Rectangle rectangle = Helper.CalcTextRectangle(GeneratedCode, CaptchaFont);
             _imageWidth = rectangle.Width;
@@ -119,6 +128,8 @@ namespace CaptchaLib
             //Fill the rectangle with the choosen color.
             g.FillRectangle(BackgroundColor, rect);
 
+            
+
             //Draw Code text...
             for (int i = 0; i < code.Length; i++)
             {
@@ -143,6 +154,9 @@ namespace CaptchaLib
         /// <param name="g"></param>
         private void DrawRandomLines(Graphics g)
         {
+            if (LinesColor == null)
+                LinesColor = new SolidBrush(Color.White);
+
             List<Point[]> points = Helper.GenerateLinesStartEndPoints(this.NumOfLines, _imageWidth, _imageHeight);
 
             foreach (var item in points)

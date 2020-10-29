@@ -536,17 +536,17 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:CaptchaWebAPI.Models.Captcha">
+        <member name="T:CaptchaWebAPI.Models.CaptchaModel">
             <summary>
             Captcha Domain Class
             </summary>
         </member>
-        <member name="P:CaptchaWebAPI.Models.Captcha.CaptchaImagePath">
+        <member name="P:CaptchaWebAPI.Models.CaptchaModel.CaptchaImagePath">
             <summary>
             Captcha File Path
             </summary>
         </member>
-        <member name="P:CaptchaWebAPI.Models.Captcha.CaptchaCode">
+        <member name="P:CaptchaWebAPI.Models.CaptchaModel.CaptchaCode">
             <summary>
             Captcha Code
             </summary>
