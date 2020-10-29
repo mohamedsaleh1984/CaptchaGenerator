@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CaptchaLibrary
+namespace CaptchaLib
 {
     public class Helper
     {
@@ -59,7 +59,8 @@ namespace CaptchaLibrary
                                 DateTime.Now.Day.ToString() +
                                 DateTime.Now.Hour.ToString() +
                                 DateTime.Now.Minute.ToString() +
-                                DateTime.Now.Second.ToString();
+                                DateTime.Now.Second.ToString()+
+                                DateTime.Now.Millisecond.ToString();
 
             strFileName += ".bmp";
             return strFileName;

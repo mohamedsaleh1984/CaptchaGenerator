@@ -6,7 +6,7 @@ using System.IO;
 using System.Security.Principal;
 using System.Windows.Forms;
 
-namespace CaptchaLibrary
+namespace CaptchaLib
 {
     public class CaptchaLibraryClass
     {

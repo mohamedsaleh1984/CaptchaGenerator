@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CaptchaLibrary
+namespace CaptchaLib
 {
     /// <summary>
     /// Captcha using Builder Pattern.

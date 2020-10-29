@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CaptchaLibrary
+namespace CaptchaLib.Builder
 {
     public class CaptchaBuilder:IBuilder
     {
@@ -17,6 +17,9 @@ namespace CaptchaLibrary
 
         public void WithTextLength(int length)
         {
+            if (length <= 0)
+                _instance.CodeLength = 5;
+            else
             _instance.CodeLength = length;
         }
 
@@ -30,7 +33,26 @@ namespace CaptchaLibrary
             SolidBrush solid = new SolidBrush(color);
             _instance.BackgroundColor = solid;
         }
-
+        /// <summary>
+        /// Adding Background Color of the Bitmap
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public void WithBackgroundColor(string color)
+        {
+            if (String.IsNullOrEmpty(color))
+            {
+                SolidBrush solid = new SolidBrush(Color.Black);
+                _instance.BackgroundColor = solid;
+            }
+            else {
+                Color selectedColor = Color.FromName(color);
+                if (selectedColor == null)
+                    _instance.BackgroundColor = new SolidBrush(Color.Black);
+                else
+                    _instance.BackgroundColor = new SolidBrush(selectedColor);
+            }
+        }
         /// <summary>
         /// Adding Number of Strips on the Bitmap
         /// </summary>
@@ -38,7 +60,10 @@ namespace CaptchaLibrary
         /// <returns></returns>
         public void WithNumberOfStrips(int numOfStrips)
         {
-            _instance.NumOfLines = numOfStrips;
+            if (numOfStrips <= 0)
+                _instance.NumOfLines = 5;
+            else
+                _instance.NumOfLines = numOfStrips;
         }
 
         /// <summary>
@@ -50,7 +75,27 @@ namespace CaptchaLibrary
         {
             _instance.LinesColor = new SolidBrush(color);
         }
-
+        /// <summary>
+        /// Adding Strips Color
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public void WithStripsColor(string color)
+        {
+            if (String.IsNullOrEmpty(color))
+            {
+                SolidBrush solid = new SolidBrush(Color.Black);
+                _instance.LinesColor = solid;
+            }
+            else
+            {
+                Color selectedColor = Color.FromName(color);
+                if (selectedColor == null)
+                    _instance.LinesColor = new SolidBrush(Color.Black);
+                else
+                    _instance.LinesColor = new SolidBrush(selectedColor);
+            }
+        }
         /// <summary>
         /// Add Font name, size to Captcha.
         /// </summary>

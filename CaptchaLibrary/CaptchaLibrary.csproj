@@ -7,7 +7,7 @@
     <ProjectGuid>{641794FB-6888-4A2A-8F69-953B7C86AAF0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CaptchaLibrary</RootNamespace>
+    <RootNamespace>CaptchaLib</RootNamespace>
     <AssemblyName>CaptchaLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -45,10 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Captcha.cs" />
-    <Compile Include="CaptchaBuilder.cs" />
+    <Compile Include="Builder\CaptchaBuilder.cs" />
     <Compile Include="CaptchaLibraryClass.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="IBuilder.cs" />
+    <Compile Include="Builder\IBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -8,7 +8,7 @@ namespace CaptchaWebAPI.Models
     /// <summary>
     /// Captcha Domain Class
     /// </summary>
-    public class Captcha
+    public class CaptchaModel
     {
         /// <summary>
         /// Captcha File Path

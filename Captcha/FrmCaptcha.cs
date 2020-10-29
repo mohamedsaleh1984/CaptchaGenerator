@@ -1,9 +1,9 @@
-﻿using System;
+﻿using CaptchaLib.Builder;
+using System;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using Captcha;
-using CaptchaLibrary;
+
 
 namespace Captcha
 {
@@ -42,10 +42,10 @@ namespace Captcha
 
         private void GenerateImages() {
 
-            CaptchaLibrary.Captcha captcha;
+            CaptchaLib.Captcha captcha;
             Random r;
             int lenLines = 0;
-            CaptchaBuilder captchaBuilder;
+             CaptchaBuilder captchaBuilder;
         
             for (int i = 0; i < 10; i++) {
                 r = new Random();
@@ -71,7 +71,7 @@ namespace Captcha
             if (pictureBox1.Image != null)
                 pictureBox1.Image.Dispose();
 
-            CaptchaLibrary.Captcha captcha;
+            CaptchaLib.Captcha captcha;
             CaptchaBuilder captchaBuilder = new CaptchaBuilder();
             captchaBuilder.WithBackgroundColor(Color.Red);
             captchaBuilder.WithFontColor(Color.Aqua);

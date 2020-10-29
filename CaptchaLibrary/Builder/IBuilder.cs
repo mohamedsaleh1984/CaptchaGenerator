@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CaptchaLibrary
+namespace CaptchaLib.Builder
 {
    public  interface IBuilder
     {

@@ -1,7 +1,8 @@
-﻿using CaptchaWebAPI.Models;
+﻿using CaptchaLib;
+using CaptchaLib.Builder;
+using CaptchaWebAPI.Models;
 using System.Drawing;
 using System.Web.Http;
-
 
 namespace CaptchaWebAPI.Controllers
 {
@@ -10,18 +11,15 @@ namespace CaptchaWebAPI.Controllers
     /// </summary>
     public class CaptchaController : ApiController
     {
-        private CaptchaLibrary.CaptchaLibraryClass cls = null;
+        private readonly CaptchaBuilder captchaBuilder = new CaptchaBuilder();
 
         /// <summary>
         /// Controller Constructor
         /// </summary>
         public CaptchaController()
         {
-            cls = new CaptchaLibrary.CaptchaLibraryClass
-            {
-                NumOfLines = 5,
-                BackgroundColor = new System.Drawing.SolidBrush(System.Drawing.Color.Black)
-            };
+            captchaBuilder.WithTextLength(5);
+            captchaBuilder.WithBackgroundColor(Color.Black);
         }
 
 
@@ -30,16 +28,18 @@ namespace CaptchaWebAPI.Controllers
         /// GET: api/Captcha
         /// </summary>
         /// <returns></returns>
-        public Captcha Get()
+        public CaptchaModel Get()
         {
+            CaptchaModel captchaModel = new CaptchaModel();
+            Captcha captcha;
+            captcha = captchaBuilder.Build();
 
-            Captcha captcha = new Captcha();
-            if (cls.GenerateCaptcha())
+            if (captcha.GenerateCaptcha())
             {
-                captcha.CaptchaImagePath = cls.ImageFilePath;
-                captcha.CaptchaCode = cls.GeneratedCode;
+                captchaModel.CaptchaImagePath = captcha.ImageFilePath;
+                captchaModel.CaptchaCode = captcha.GeneratedCode;
 
-                return captcha;
+                return captchaModel;
             }
             return null;
         }
@@ -53,17 +53,23 @@ namespace CaptchaWebAPI.Controllers
         /// <returns></returns>
         [Route("api/Captcha/Generate/{codeLength:int}/{backgroundColor}")]
         [HttpGet]
-        public Captcha Generate(int codeLength = 5, string backgroundColor = "Black")
+        public CaptchaModel Generate(int codeLength = 5, string backgroundColor = "Black")
         {
-            cls = new CaptchaLibrary.CaptchaLibraryClass(codeLength, "", 200, 50);
-            Color selectedColor = Color.FromName(backgroundColor);
+            CaptchaModel captchaModel = new CaptchaModel();
+            Captcha captcha;
+           
+            captchaBuilder.WithTextLength(codeLength);
+            captchaBuilder.WithBackgroundColor(backgroundColor);
 
-            cls.BackgroundColor = new System.Drawing.SolidBrush(selectedColor);
-            if (cls.BackgroundColor == null)
+            captcha = captchaBuilder.Build();
+            if (captcha.GenerateCaptcha())
             {
-                cls.BackgroundColor = new System.Drawing.SolidBrush(Color.Black);
+                captchaModel.CaptchaImagePath = captcha.ImageFilePath;
+                captchaModel.CaptchaCode = captcha.GeneratedCode;
+
+                return captchaModel;
             }
-            return Get();
+            return null;
         }
 
         /// <summary>
@@ -75,18 +81,24 @@ namespace CaptchaWebAPI.Controllers
         /// <returns></returns>
         [Route("api/Captcha/Generate/{codeLength:int}/{backgroundColor}/{numOfLines}")]
         [HttpGet]
-        public Captcha GenerateWithLines(int codeLength = 5, string backgroundColor = "Black", int numOfLines = 5)
+        public CaptchaModel GenerateWithLines(int codeLength = 5, string backgroundColor = "Black", int numOfLines = 5)
         {
-            cls = new CaptchaLibrary.CaptchaLibraryClass(codeLength);
-            Color selectedColor = Color.FromName(backgroundColor);
+            CaptchaModel captchaModel = new CaptchaModel();
+            Captcha captcha;
 
-            cls.BackgroundColor = new System.Drawing.SolidBrush(selectedColor);
-            if (cls.BackgroundColor == null)
+            captchaBuilder.WithTextLength(codeLength);
+            captchaBuilder.WithBackgroundColor(backgroundColor);
+            captchaBuilder.WithNumberOfStrips(numOfLines);
+
+            captcha = captchaBuilder.Build();
+            if (captcha.GenerateCaptcha())
             {
-                cls.BackgroundColor = new System.Drawing.SolidBrush(Color.Black);
+                captchaModel.CaptchaImagePath = captcha.ImageFilePath;
+                captchaModel.CaptchaCode = captcha.GeneratedCode;
+
+                return captchaModel;
             }
-            cls.NumOfLines = numOfLines;
-            return Get();
+            return null;
         }
 
         /// <summary>
@@ -99,29 +111,28 @@ namespace CaptchaWebAPI.Controllers
         /// <returns></returns>
         [Route("api/Captcha/Generate/{codeLength:int}/{backgroundColor}/{numOfLines}/{linesColor}")]
         [HttpGet]
-        public Captcha GenerateWithColoredLines(int codeLength = 5,
+        public CaptchaModel GenerateWithColoredLines(int codeLength = 5,
                                         string backgroundColor = "Black",
                                         int numOfLines = 5,
                                         string linesColor = "Gray")
         {
-            cls = new CaptchaLibrary.CaptchaLibraryClass(codeLength);
-            Color selectedColor = Color.FromName(backgroundColor);
+            CaptchaModel captchaModel = new CaptchaModel();
+            Captcha captcha;
 
-            cls.BackgroundColor = new System.Drawing.SolidBrush(selectedColor);
-            if (cls.BackgroundColor == null)
+            captchaBuilder.WithTextLength(codeLength);
+            captchaBuilder.WithBackgroundColor(backgroundColor);
+            captchaBuilder.WithNumberOfStrips(numOfLines);
+            captchaBuilder.WithStripsColor(linesColor);
+
+            captcha = captchaBuilder.Build();
+            if (captcha.GenerateCaptcha())
             {
-                cls.BackgroundColor = new System.Drawing.SolidBrush(Color.Black);
-            }
-            cls.NumOfLines = numOfLines;
+                captchaModel.CaptchaImagePath = captcha.ImageFilePath;
+                captchaModel.CaptchaCode = captcha.GeneratedCode;
 
-            Color clinesColor = Color.FromName(linesColor);
-            cls.LinesColor = new System.Drawing.SolidBrush(clinesColor);
-            if (cls.LinesColor == null)
-            {
-                cls.LinesColor = new System.Drawing.SolidBrush(Color.Gray);
+                return captchaModel;
             }
-
-            return Get();
+            return null;
         }
     }
 }
