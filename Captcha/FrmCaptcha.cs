@@ -36,8 +36,8 @@ namespace Captcha
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            //GenerateImage();
-            GenerateImages(); 
+            GenerateImage();
+            //GenerateImages(); 
         }
 
         private void GenerateImages() {
