@@ -1,24 +1,63 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+﻿<div class="row">
+    <h1>Captcha Generator</h1>
+    <h5>
+        <b>
+            Generate Captcha images using Windows Application, ASP.NET WebAPIs with many different parameters like
+            background color, font color, font size, number of strips, color of strips, dynamic code length.
+        </b>
+        
+    </h5>
 </div>
+
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+    <div class="col-md-2">
+        <p>
+            <b>
+                <i>
+                    N-Tier Architecture<br />
+                    Used Design Patterns: Builder<br />
+                    <hr />
+                    Windows Application<br />
+                    ASP.NET Web API
+                </i>
+            </b>
+        </p>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
+
+    <div class="col-md-6">
+        <b>CaptchaLibrary</b><br />
+
+        <hr />
+        <b>Captcha</b>
+        <ul>
+            <li>
+                The heart beat of the project where all the magic happen :D
+            </li>
+        </ul>
+
+        <b>Helper Methods</b>
+        <ul>
+            <li>
+                GenerateRandomText
+                <br /> <i>Generate random text based on needed length for the captcha.</i>
+            </li>
+            <li>
+                GenerateLinesStartEndPoints<br />
+                <i>Generate random 2 dimention arrays representing the lines corrdinates.</i>
+            <li>
+                GenerateFileName
+                <br /> <i>Generate new unique file name with bmp extension.</i>
+            </li>
+            <li>CalcTextRectangle <br /><i>Calculate the needed rectangle dimention based on the text and font selected and font size</i> </li>
+        </ul>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+    <div class="col-md-2">
+        <b>CaptchaWinForms</b>
+        <i>Simple windows applications show how to use the Library, Generate and Verify</i>
+    </div>
+    <div class="col-md-2">
+        <b>CaptchaWebAPI</b>
+        <i>ASP.NET Web Service shows how to generate Captcha</i>
     </div>
 </div>
+<b>Learn more from    @Html.ActionLink("API Documentation", "Index", "Help", new { area = "" }, null)</b>

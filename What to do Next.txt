@@ -1,5 +1,5 @@
 1. Test the Builder (Done)
 2. Replace the service calls with Builder (Done)
 3. Test the Web Service (Done)
-4. Modifiy the Home Page
+4. Modifiy the Home Page (Done)
 5. Publish to Azure

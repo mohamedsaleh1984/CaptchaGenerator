@@ -6,7 +6,7 @@
 @model Collection<ApiDescription>
 
 @{
-    ViewBag.Title = "ASP.NET Web API Help Page";
+    ViewBag.Title = "Captcha Generator Web API Documentation";
 
     // Group APIs by controller
     ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
@@ -20,16 +20,16 @@
         </div>
     </div>
 </header>
-<div id="body" class="help-page">
+<div id="body" class="help-page" style="color:white">
     <section class="featured">
         <div class="content-wrapper">
             <h2>Introduction</h2>
             <p>
-                Provide a general description of your APIs here.
+                This page will show you How to make Web calls, parameter types and expected return type.
             </p>
         </div>
     </section>
-    <section class="content-wrapper main-content clear-fix">
+    <section class="content-wrapper main-content clear-fix" style="color:black">
         @foreach (var group in apiGroups)
         {
             @Html.DisplayFor(m => group, "ApiGroup")
