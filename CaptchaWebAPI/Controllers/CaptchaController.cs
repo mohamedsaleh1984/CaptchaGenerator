@@ -2,6 +2,7 @@
 using CaptchaLib.Builder;
 using CaptchaWebAPI.Models;
 using System.Drawing;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace CaptchaWebAPI.Controllers
@@ -33,13 +34,21 @@ namespace CaptchaWebAPI.Controllers
             Captcha captcha;
             captcha = captchaBuilder.Build();
 
-            if (captcha.GenerateCaptcha())
+            try
             {
-                captchaModel.CaptchaImagePath = captcha.ImageFilePath;
-                captchaModel.CaptchaCode = captcha.GeneratedCode;
+                if (captcha.GenerateCaptcha())
+                {
+                    captchaModel.CaptchaImagePath = captcha.ImageFilePath;
+                    captchaModel.CaptchaCode = captcha.GeneratedCode;
 
-                return captchaModel;
+                    return captchaModel;
+                }
             }
+            catch (System.Exception)
+            {
+                throw new HttpResponseException(System.Net.HttpStatusCode.ExpectationFailed);
+            }
+
             return null;
         }
 
@@ -56,7 +65,7 @@ namespace CaptchaWebAPI.Controllers
         {
             CaptchaModel captchaModel = new CaptchaModel();
             Captcha captcha;
-           
+
             captchaBuilder.WithTextLength(codeLength);
             captchaBuilder.WithBackgroundColor(backgroundColor);
 
@@ -88,15 +97,22 @@ namespace CaptchaWebAPI.Controllers
             captchaBuilder.WithTextLength(codeLength);
             captchaBuilder.WithBackgroundColor(backgroundColor);
             captchaBuilder.WithNumberOfStrips(numOfLines);
-
-            captcha = captchaBuilder.Build();
-            if (captcha.GenerateCaptcha())
+            try
             {
-                captchaModel.CaptchaImagePath = captcha.ImageFilePath;
-                captchaModel.CaptchaCode = captcha.GeneratedCode;
+                captcha = captchaBuilder.Build();
+                if (captcha.GenerateCaptcha())
+                {
+                    captchaModel.CaptchaImagePath = captcha.ImageFilePath;
+                    captchaModel.CaptchaCode = captcha.GeneratedCode;
 
-                return captchaModel;
+                    return captchaModel;
+                }
             }
+            catch (System.Exception)
+            {
+                throw new HttpResponseException(System.Net.HttpStatusCode.ExpectationFailed);
+            }
+
             return null;
         }
 
@@ -124,16 +140,58 @@ namespace CaptchaWebAPI.Controllers
             captchaBuilder.WithStripsColor(linesColor);
 
             captcha = captchaBuilder.Build();
-            if (captcha.GenerateCaptcha())
+            try
             {
-                captchaModel.CaptchaImagePath = captcha.ImageFilePath;
-                captchaModel.CaptchaCode = captcha.GeneratedCode;
+                if (captcha.GenerateCaptcha())
+                {
+                    captchaModel.CaptchaImagePath = captcha.ImageFilePath;
+                    captchaModel.CaptchaCode = captcha.GeneratedCode;
 
-                return captchaModel;
+                    return captchaModel;
+                }
+            }
+            catch (System.Exception)
+            {
+                throw new HttpResponseException(System.Net.HttpStatusCode.ExpectationFailed);
+            }
+            return null;
+        }
+        /// <summary>
+        /// Generate Captcha with Five Gray Strips. 
+        /// </summary>
+        /// <param name="codeLength">Length of Captcha</param>
+        /// <param name="backgroundColor">Background Color</param>
+        /// <returns></returns>
+        [Route("api/Captcha/GenGray5Strips/{codeLength:int}/{backgroundColor}")]
+        [HttpGet]
+        public CaptchaModel GenerateWith5GrayStrips(int codeLength = 5,
+                                        string backgroundColor = "Black")
+        {
+            CaptchaModel captchaModel = new CaptchaModel();
+            Captcha captcha;
+
+            captchaBuilder.WithTextLength(codeLength);
+            captchaBuilder.WithBackgroundColor(backgroundColor);
+            captchaBuilder.WithNumberOfStrips(5);
+            captchaBuilder.WithStripsColor(Color.Gray);
+
+            captcha = captchaBuilder.Build();
+            try
+            {
+                if (captcha.GenerateCaptcha())
+                {
+                    captchaModel.CaptchaImagePath = captcha.ImageFilePath;
+                    captchaModel.CaptchaCode = captcha.GeneratedCode;
+
+                    return captchaModel;
+                }
+            }
+            catch (System.Exception)
+            {
+                throw new HttpResponseException(System.Net.HttpStatusCode.ExpectationFailed);
             }
             return null;
         }
 
-        
     }
 }
